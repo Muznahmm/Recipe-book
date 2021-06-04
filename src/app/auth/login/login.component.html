@@ -1,0 +1,29 @@
+<app-layout>
+        <form ngForm #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+            <mat-form-field class="fullWidth">
+                <input matInput ngModel #userName="ngModel" type="text" minlength="6" required
+                    name="userName" placeholder="Username">
+            </mat-form-field> 
+            <div *ngIf="userName.touched">
+                <mat-error *ngIf="userName.hasError('required')">
+                    Username is required.
+                </mat-error>
+                <mat-error *ngIf="userName.hasError('minlength')">
+                    Username is must have atleast 6 charecters.
+                </mat-error>
+            </div>
+            <mat-form-field class="fullWidth">
+                <input matInput name="password" type="password" ngModel #password="ngModel" required
+                placeholder="Password">
+            </mat-form-field>
+            <div *ngIf="password.touched">
+                <mat-error *ngIf="password.hasError('required')">
+                    Password is required.
+                </mat-error>
+            </div>
+            <p class="sign-up">
+                Create an account? <a class="link" routerLink="/signup">Sign up</a>
+            </p>
+            <button mat-raised-button color="primary">Login</button>
+        </form>
+</app-layout>

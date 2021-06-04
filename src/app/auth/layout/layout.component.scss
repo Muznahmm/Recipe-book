@@ -1,0 +1,10 @@
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    mat-card {
+        width: 500px;
+        margin-top: 24vh;
+    }
+}
