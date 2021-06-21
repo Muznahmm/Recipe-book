@@ -1,41 +1,56 @@
 <app-layout>
-    <form ngForm #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
-        <mat-form-field class="fullWidth">
-            <input matInput ngModel #userName="ngModel" type="text" minlength="6" required
-                name="userName" placeholder="Username">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field class="fullWidth" appearance="standard" aria-autocomplete="off">
+            <mat-label>Email</mat-label>
+
+            <input matInput formControlName="email" type="email" name="email" placeholder="Email">
         </mat-form-field> 
-        <div *ngIf="userName.touched">
-            <mat-error *ngIf="userName.hasError('required')">
-                Username is required.
-            </mat-error>
-            <mat-error *ngIf="userName.hasError('minlength')">
-                Username is must have atleast 6 charecters.
-            </mat-error>
-        </div>
-        <mat-form-field class="fullWidth">
-            <input matInput ngModel #email="ngModel" type="text" email required
-                name="email" placeholder="Email">
+        <mat-error *ngIf="email.touched">
+            <mat-error >{{ getEmailError() }}</mat-error>
+        </mat-error>
+    
+
+        <mat-form-field class="fullWidth" appearance="standard">
+            <mat-label>Username</mat-label>
+
+            <input matInput formControlName="userName" type="text" minlength="6" name="userName" placeholder="Username">
         </mat-form-field> 
-        <div *ngIf="email.touched">
-            <mat-error *ngIf="email.hasError('required')">
-                Email is required.
-            </mat-error>
-            <mat-error *ngIf="email.hasError('email')">
-                Please enter a valid email.
-            </mat-error>
-        </div>
-        <mat-form-field class="fullWidth">
-            <input matInput name="password" type="password" ngModel #password="ngModel" required
-            placeholder="Password">
+        <mat-error *ngIf="userName.touched">
+            <mat-error>{{ getUsernameError() }}</mat-error>
+        </mat-error>
+
+        <mat-form-field class="fullWidth" appearance="standard">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" name="password" placeholder="Password">
+            <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
         </mat-form-field>
-        <div *ngIf="password.touched">
-            <mat-error *ngIf="password.hasError('required')">
-                Password is required.
+        <mat-error *ngIf="password.touched">
+            <mat-error>{{ getPasswordError() }}</mat-error>
+        </mat-error> 
+
+        <mat-form-field class="fullWidth" appearance="standard">
+            <mat-label>Confirm Password</mat-label>
+
+                <input matInput formControlName="confirmPassword" name="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm Password">
+                <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide Confirm password'" [attr.aria-pressed]="hideConfirmPassword">
+                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-error *ngIf="confirmPassword.touched">
+                <mat-error>{{ getConfirmPasswordError() }}</mat-error>
             </mat-error>
-        </div>
+
         <p class="sign-up">
             Already have an account? <a class="link" routerLink="/login">Login</a>
         </p>
-        <button mat-raised-button color="primary">Login</button>
+
+        <button mat-raised-button color="primary">Sign Up</button>
     </form>
+    <!-- {{ 'Value: ' + valueFromService }}
+        <button mat-raised-button color="primary" (click)="setValue()">Set Value</button>
+        <button mat-raised-button color="primary" (click)="getValue()">Get Value</button> -->
+
 </app-layout>
