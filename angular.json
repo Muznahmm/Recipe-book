@@ -74,10 +74,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "authpage:build",
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "authpage:build:production"
-            },
+              "browserTarget": "authpage:build:production"            },
             "development": {
               "browserTarget": "authpage:build:development"
             }
