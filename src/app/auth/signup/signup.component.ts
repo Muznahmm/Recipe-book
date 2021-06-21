@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { UsernameValidators } from '../../shared/validators/username.validator';
@@ -10,9 +12,10 @@ import { PasswordValidators, strongPasswordErrors } from '../../shared/validator
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   hidePassword = true;
   hideConfirmPassword= true;
+  signUpInProgress = false;
 
   // valueFromService = this.authService.getValue();
   
@@ -25,13 +28,49 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private router: Router,
   ) { }
 
+  private passwordSubs!: Subscription;
+
   ngOnInit(): void {
+    this.passwordSubs = this.password.valueChanges
+    .subscribe( value => {
+      this.confirmPassword.clearValidators();
+      this.confirmPassword.setValidators([
+        Validators.required,
+        PasswordValidators.shouldMatch(value),
+      ]);
+      this.confirmPassword.updateValueAndValidity();
+    });
+  }
+
+  ngOnDestroy() {
+    this.passwordSubs.unsubscribe();
   }
 
   onSubmit() {
+    if (this.signupForm.valid) {
+      this.signUpInProgress = true;
 
+      this.authService.signup(this.signupForm.value)
+      .subscribe( _ => {
+        this.signUpInProgress = false;
+        this.resetSignupForm();
+        this.router.navigateByUrl('/login');
+      },
+      err => {
+        console.log('Error:',err)
+      });
+    }
+  }
+
+  private resetSignupForm() {
+    this.signupForm.reset();
+
+    for (let control in this.signupForm.controls) {
+      this.signupForm.controls[control].setErrors(null);
+    }
   }
 
   get userName() {
@@ -83,7 +122,7 @@ export class SignupComponent implements OnInit {
       }
 
       if ( errors.maxLength) {
-        return `Must contain more than ${errors.maxLength} charecters`;
+        return `Must not contain more than ${errors.maxLength} charecters`;
       }
 
       if ( errors.requireSpecialCharacter) {
