@@ -22,9 +22,10 @@ export class AuthService {
         return (this.http.post('/api/accounts/login',data) as Observable<LoginResponse>)
         .pipe(
             tap( res => {
+                const expiryTime = Date.now() + (24 * 60 * 60 * 1000);
                 this.cookieService.set(AUTH_KEY, res.token, {
                     path: '/',
-                    expires: new Date(2021, 7, 23),
+                    expires: new Date(expiryTime),
                 });
                 
             })
