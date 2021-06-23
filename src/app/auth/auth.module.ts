@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { LayoutComponent } from './layout/layout.component';
-import { NavbarComponent } from '../core/navbar/navbar.component';
 
 
 @NgModule({
