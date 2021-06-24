@@ -1,1 +1,18 @@
-<p>contact works!</p>
+<div class="contact">
+    <div class="image">
+        <img src="assets/images/contact.png">
+    </div>
+    <div class="info">
+        <div class="name">{{ contact.firstName +' '+ contact.lastName }}</div>
+        <div class="updatedOn">{{ contact.createdAt | date: 'fullDate' }}</div>
+    </div>
+    <div class="email">{{ contact.email }}</div>
+    <div class="summary">
+        <div class="youOwe">
+            You Owes: <span class="amount">{{ contact.youOwe | currency:'INR' }}</span>
+        </div>
+        <div class="oweYou">
+            Owes You: <span class="amount">{{ contact.owesYou | currency:'INR' }}</span>
+        </div>
+    </div>
+</div>

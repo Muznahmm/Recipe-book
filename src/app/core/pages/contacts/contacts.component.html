@@ -1,18 +1,9 @@
-<div class="contact" *ngFor="let contact of contacts">
-    <div class="image">
-        <img src="">
+<div class="container">
+    <div class="header">
+        <h1>Contacts</h1>
+        <button mat-raised-button>Create Contacts</button>
     </div>
-    <div class="info">
-        <div class="name">{{ contact.firstName +' '+ contact.lastName }}</div>
-        <div class="updatedOn">{{ contact.createdAt | date: 'fullDate' }}</div>
-    </div>
-    <div class="email">{{ contact.email }}</div>
-    <div class="summary">
-        <div class="youOwe">
-            You Owes: <span class="amount">{{ contact.youOwe | currency:'INR' }}</span>
-        </div>
-        <div class="oweYou">
-            Owes You: <span class="amount">{{ contact.owesYou | currency:'INR' }}</span>
-        </div>
+    <div class="contacts">
+        <app-contact [contactToDisplay]="contact" *ngFor="let contact of contacts"></app-contact>
     </div>
 </div>
