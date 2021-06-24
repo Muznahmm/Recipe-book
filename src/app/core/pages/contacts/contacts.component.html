@@ -1,20 +1,18 @@
-<mat-card>
-    <div class="contact">
-        <div class="image">
-            <img src="">
+<div class="contact" *ngFor="let contact of contacts">
+    <div class="image">
+        <img src="">
+    </div>
+    <div class="info">
+        <div class="name">{{ contact.firstName +' '+ contact.lastName }}</div>
+        <div class="updatedOn">{{ contact.createdAt | date: 'fullDate' }}</div>
+    </div>
+    <div class="email">{{ contact.email }}</div>
+    <div class="summary">
+        <div class="youOwe">
+            You Owes: <span class="amount">{{ contact.youOwe | currency:'INR' }}</span>
         </div>
-        <div class="info">
-            <div class="name"></div>
-            <div class="updatedOn"></div>
-        </div>
-        <div class="email"></div>
-        <div class="summery">
-            <div class="youOwe">
-                You Owes: <span class="amount"></span>
-            </div>
-            <div class="oweYou">
-                Owes You: <span class="amount"></span>
-            </div>
+        <div class="oweYou">
+            Owes You: <span class="amount">{{ contact.owesYou | currency:'INR' }}</span>
         </div>
     </div>
-</mat-card>
+</div>

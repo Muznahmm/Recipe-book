@@ -4,7 +4,8 @@ import { tap } from 'rxjs/Operators'
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
-import { LoginFormData, SignUpFormData, LoginResponse } from './auth.types';
+import { LoginFormData, SignUpFormData, LoginResponse } from '../helpers/types';
+import * as API from '../helpers/apis';
 
 const AUTH_KEY = 'auth';
 
@@ -19,7 +20,7 @@ export class AuthService {
     ) {}
 
     login(data: LoginFormData){
-        return (this.http.post('/api/accounts/login',data) as Observable<LoginResponse>)
+        return (this.http.post(API.LOGIN ,data) as Observable<LoginResponse>)
         .pipe(
             tap( res => {
                 const expiryTime = Date.now() + (24 * 60 * 60 * 1000);
@@ -33,7 +34,11 @@ export class AuthService {
     }
 
     signup(data: SignUpFormData) {
-        return this.http.post('/api/accounts/signup', data);
+        return this.http.post(API.SIGNUP, data);
+    }
+
+    getAuthToken() {
+        return this.cookieService.get(AUTH_KEY);
     }
 
 }
