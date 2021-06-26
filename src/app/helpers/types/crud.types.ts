@@ -1,0 +1,1 @@
+export type eventTypes = 'add' | 'visibility'| 'delete'| 'edit';
