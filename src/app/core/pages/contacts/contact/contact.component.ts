@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ContactData } from 'src/app/helpers/types';
+import { Router } from '@angular/router';
+
+import { ContactData, eventTypes } from 'src/app/helpers/types';
 
 @Component({
   selector: 'app-contact',
@@ -10,9 +12,35 @@ export class ContactComponent implements OnInit {
 
   @Input('contactToDisplay') contact!: ContactData;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  onCaptureEvent(e: eventTypes){
+    switch(e) {
+      case 'add':
+        break;
+      case 'visibility':
+        this.onViewContact();
+        break;
+      case 'edit':
+        this.onEditContact();
+        break;
+      case 'delete':
+        break;
+    }
+  }
+
+  onViewContact() {
+    // console.log('Event view', e)
+    this.router.navigate(['/contact', this.contact.id]);
+  }
+
+  onEditContact() {
+    this.router.navigate(['/edit-contact',this.contact.id])
   }
 
 }

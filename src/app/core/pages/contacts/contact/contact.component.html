@@ -1,4 +1,4 @@
-<div class="contact">
+<div class="contact" (click)="onViewContact()">
     <div class="image">
         <img src="assets/images/contact.png">
     </div>
@@ -14,5 +14,8 @@
         <div class="oweYou">
             Owes You: <span class="amount">{{ contact.owesYou | currency:'INR' }}</span>
         </div>
+    </div>
+    <div class="buttons">
+        <crud-buttons (view)="onCaptureEvent($event)"></crud-buttons>
     </div>
 </div>

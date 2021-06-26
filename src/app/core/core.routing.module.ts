@@ -1,14 +1,44 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { ContactComponent } from './pages/contacts/contact/contact.component';
+import { ContactFormComponent } from './pages/contacts/contact-form/contact-form.component';
+import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
+
 import { TransferComponent } from './pages/transfers/transfer/transfer.component';
 
+
 const routes: Routes = [
-    { path: 'home', component: NavbarComponent,
+    { 
+        path: '', 
+        component: NavbarComponent,
         children: [
-            { path: 'contacts', component: ContactsComponent },
+            { 
+                path: 'contacts', 
+                component: ContactsComponent 
+            },
+            { 
+                path: 'contact/:id', 
+                component: ContactViewComponent 
+            },
+            { 
+                path: 'new-contact', 
+                component: ContactFormComponent 
+            },
+            { 
+                path: 'edit-contact/:id', 
+                component: ContactFormComponent 
+            },
+            { 
+                path: 'contact', 
+                component: ContactComponent 
+            },
+            
             { path: 'transfers', component: TransferComponent },
+            
+            { path: '', redirectTo: 'contacts', pathMatch: 'full' },
         ] 
     },
 ]

@@ -4,8 +4,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
-import { UsernameValidators } from '../../shared/validators/username.validator';
-import { PasswordValidators, strongPasswordErrors } from '../../shared/validators/password.validator';
+import { UsernameValidators,PasswordValidators, strongPasswordErrors  } from '../../utils/validators';
 
 @Component({
   selector: 'app-signup',

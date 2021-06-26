@@ -1,3 +1,13 @@
+export interface CreateContactData {
+    email: string;
+    firstName: string;
+    lastName: string;
+}
+
+export interface UpdateContactData extends CreateContactData {
+    id: number;
+}
+
 export interface ContactData {
     id?: number;
     email: string;

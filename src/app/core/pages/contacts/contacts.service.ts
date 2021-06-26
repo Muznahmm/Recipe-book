@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from '../../../auth/auth.service';
 import * as API from '../../../helpers/apis/contacts';
-import { ContactsData } from '../../../helpers/types/contacts.types';
+import { ContactsData, ContactData } from '../../../helpers/types/contacts.types';
 
 @Injectable({
     providedIn: 'root',
@@ -17,11 +17,10 @@ export class ContactsService {
     ) { }
 
     fetchContacts() {
-        const token = this.authService.getAuthToken();
-        const headers = new HttpHeaders({
-            'content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        });
-        return this.http.get(API.GET_CONTACTS, { headers }) as Observable<ContactsData>;
+        return this.http.get(API.GET_CONTACTS) as Observable<ContactsData>;
+    }
+
+    fetchContactById(id: number) {
+        return this.http.get<ContactData>(`${API.GET_CONTACT}/${id}`);
     }
 }
