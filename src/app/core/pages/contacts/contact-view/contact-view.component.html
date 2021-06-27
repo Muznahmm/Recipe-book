@@ -1,1 +1,34 @@
-<p>contact-view works!</p>
+<div class="container">
+    <div class="contact-data"  *ngIf="contact">
+        <div class="general-info">
+            <div class="image">
+                <img src="assets/images/contact.png">
+            </div>
+            <div class="general-inner-container">
+                <div class="fullname">{{ fullName }}</div>
+                <div class="date">{{ contact.createdAt}}</div>
+                <div class="email">{{ contact.email }}</div>
+            </div>
+        </div>
+        
+        
+        <div class="transaction-info">
+            <div class="youOwe">
+                <span class="text">
+                    You Owes: <span class="amount">{{ contact.youOwe | currency:'INR' }}</span>
+                </span>
+            </div>
+            <div class="oweYou">
+                <span class="text">
+                    Owes You: <span class="amount">{{ contact.owesYou | currency:'INR' }}</span>
+                </span>
+            </div>
+        </div>
+        <div class="buttons">
+            <crud-buttons [hideViewIcon]="true" [hideDeleteIcon]="true" [hideEditIcon]="true"></crud-buttons>
+        </div>
+    </div>
+    <div class="transactions">
+        <app-transaction *ngFor="let transaction of transactions; last as isLastIteration" [transaction]="transaction" [isLast]="isLastIteration"></app-transaction>
+    </div>
+</div>

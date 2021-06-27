@@ -1,0 +1,1 @@
+export const GET_CONT_TRANSACTIONS = '/api/transactions/of';
