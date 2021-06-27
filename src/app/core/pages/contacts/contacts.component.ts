@@ -19,7 +19,7 @@ export class ContactsComponent implements OnInit {
     this.fetchContacts();
   }
 
-  private fetchContacts() {
+  fetchContacts() {
     this.contactsService
     .fetchContacts()
     .subscribe(res => {

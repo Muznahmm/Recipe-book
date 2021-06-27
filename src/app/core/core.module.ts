@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SharedModule } from '../shared/shared.module';
 import { CoreRoutingModule } from './core.routing.module';
@@ -41,6 +42,7 @@ import { ContactViewComponent } from './pages/contacts/contact-view/contact-view
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
+        MatDialogModule,
     ]
 })
 

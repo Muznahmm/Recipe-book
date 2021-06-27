@@ -1,0 +1,11 @@
+<div class="container">
+    <h2>{{ data.title }}</h2>
+    <mat-dialog-content>{{ data.description }}</mat-dialog-content>
+    <mat-dialog-actions>
+
+        <button mat-raised-button (click)="onCancel()">Cancel</button>
+        <button mat-raised-button style="background-color: #d87093;" (click)="onConfirm()">Yes, Delete</button>
+    
+    </mat-dialog-actions>
+</div>
+

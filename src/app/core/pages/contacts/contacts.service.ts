@@ -23,4 +23,8 @@ export class ContactsService {
     fetchContactById(id: number) {
         return this.http.get<ContactData>(`${API.GET_CONTACT}/${id}`);
     }
+
+    deleteContact(id: number) {
+        return this.http.delete<{success: boolean}>(`${API.DELETE_CONTACT}/${id}`);
+    }
 }

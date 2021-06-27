@@ -4,6 +4,6 @@
         <button mat-raised-button routerLink="/new-contact">Create Contacts</button>
     </div>
     <div class="contacts">
-        <app-contact [contactToDisplay]="contact" *ngFor="let contact of contacts"></app-contact>
+        <app-contact (refresh)="fetchContacts()" [contactToDisplay]="contact" *ngFor="let contact of contacts"></app-contact>
     </div>
 </div>

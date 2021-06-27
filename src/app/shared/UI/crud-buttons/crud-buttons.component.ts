@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { eventTypes } from 'src/app/helpers/types';
 
 @Component({
@@ -7,7 +7,12 @@ import { eventTypes } from 'src/app/helpers/types';
   styleUrls: ['./crud-buttons.component.scss']
 })
 export class CrudButtonsComponent {
-@Output('view') view = new EventEmitter(); 
+  @Input('hideAddIcon') hideAdd!: boolean;
+  @Input('hideEditIcon') hideEdit!: boolean;
+  @Input('hideViewIcon') hideView!: boolean;
+  @Input('hideDeleteIcon') hideDelete!: boolean;
+  
+  @Output('view') view = new EventEmitter(); 
 
 
 constructor() { }

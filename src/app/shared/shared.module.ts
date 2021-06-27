@@ -7,11 +7,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { CrudButtonsComponent } from './UI/crud-buttons/crud-buttons.component';
 import { CrudButtonComponent } from './UI/crud-button/crud-button.component';
+import { DeleteConfirmationDialogComponent } from './UI/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     CrudButtonComponent,
     CrudButtonsComponent,
+    DeleteConfirmationDialogComponent,
     
   ],
   imports: [
@@ -23,6 +25,7 @@ import { CrudButtonComponent } from './UI/crud-button/crud-button.component';
   exports: [
     CrudButtonComponent,
     CrudButtonsComponent,
+    DeleteConfirmationDialogComponent,
   ],
 })
 export class SharedModule { }
