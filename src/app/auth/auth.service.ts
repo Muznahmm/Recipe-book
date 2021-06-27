@@ -41,4 +41,8 @@ export class AuthService {
         return this.cookieService.get(AUTH_KEY);
     }
 
+    checkAuthValidity() {
+        return this.http.get<{ auth: boolean }>(API.AUTH_CHECK);
+    }
+
 }

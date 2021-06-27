@@ -6,14 +6,15 @@ import { ContactsComponent } from './pages/contacts/contacts.component';
 import { ContactComponent } from './pages/contacts/contact/contact.component';
 import { ContactFormComponent } from './pages/contacts/contact-form/contact-form.component';
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
+import { CorePageGuard } from './core-page.guard';
 
-import { TransferComponent } from './pages/transfers/transfer/transfer.component';
 
 
 const routes: Routes = [
     { 
         path: '', 
         component: NavbarComponent,
+        canActivate: [CorePageGuard],
         children: [
             { 
                 path: 'contacts', 
@@ -35,9 +36,6 @@ const routes: Routes = [
                 path: 'contact', 
                 component: ContactComponent 
             },
-            
-            { path: 'transfers', component: TransferComponent },
-            
             { path: '', redirectTo: 'contacts', pathMatch: 'full' },
         ] 
     },

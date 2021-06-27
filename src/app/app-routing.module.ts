@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import { AuthPageGuard } from './auth/auth-page.guard';
 
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
@@ -8,11 +9,13 @@ import { SignupComponent } from './auth/signup/signup.component';
 const routes: Route[] = [
     { 
         path: 'login', 
-        component: LoginComponent 
+        component: LoginComponent,
+        canActivate: [AuthPageGuard], 
     },
     { 
         path: 'signup', 
-        component: SignupComponent 
+        component: SignupComponent,
+        canActivate: [AuthPageGuard], 
     },
     // { path: '', redirectTo: 'login', pathMatch: 'full'},
     { 

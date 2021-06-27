@@ -15,10 +15,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ContactFormComponent } from './pages/contacts/contact-form/contact-form.component';
 import { ContactComponent } from './pages/contacts/contact/contact.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
-import { TransferFormComponent } from './pages/transfers/transfer-form/transfer-form.component';
-import { TransferComponent } from './pages/transfers/transfer/transfer.component';
-import { TransfersComponent } from './pages/transfers/transfers.component';
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
+import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { TransactionComponent } from './pages/transactions/transaction/transaction.component';
 
 
 @NgModule({
@@ -28,9 +27,8 @@ import { ContactViewComponent } from './pages/contacts/contact-view/contact-view
         ContactComponent,
         ContactFormComponent,
         ContactViewComponent,
-        TransfersComponent,
-        TransferComponent,
-        TransferFormComponent,
+        TransactionsComponent,
+        TransactionComponent,
     ],
     imports: [
         CoreRoutingModule,
