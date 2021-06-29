@@ -2,6 +2,31 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    .toolbar-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .badge{
+            text-decoration: none;
+            color: white;
+            font-size: 22px;
+        }
+        .links {
+            margin-left: 16px;
+            .link{
+                margin-right: 16px;
+                font-weight: 500;
+                font-size: 18px;
+                text-decoration: none;
+                color:white;
+            }
+            .active {
+                color: #d87093;
+                border-bottom: 4px solid #d87093;
+            }
+        }
+
+    }
     .contents {
         flex-grow: 1;
         overflow-y: auto;

@@ -1,8 +1,13 @@
 <div class="container">
   <mat-toolbar color="primary">
-    <span>Money Manager</span>
+    <div class="toolbar-container">
+      <a class="badge" routerLink="/">Money Manager</a>
+  
+      <div class="links">
+        <a class="link" *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active">{{ link.name }}</a>
+      </div>
+    </div>
   </mat-toolbar>
-
 
   <div class="contents">
     <router-outlet></router-outlet>
