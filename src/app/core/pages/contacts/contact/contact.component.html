@@ -1,4 +1,4 @@
-<div class="contact" (click)="onViewContact()">
+<a class="contact" [routerLink]="['/contact', contact.id]">
     <div class="image">
         <img src="assets/images/contact.png">
     </div>
@@ -18,4 +18,4 @@
     <div class="buttons">
         <crud-buttons [hideAddIcon]="true" (view)="onCaptureEvent($event)"></crud-buttons>
     </div>
-</div>
+</a>
