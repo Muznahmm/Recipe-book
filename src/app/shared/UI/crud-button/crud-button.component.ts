@@ -14,6 +14,7 @@ export class CrudButtonComponent {
 
   onClickButton(e: Event) {
     e.stopPropagation();
+    e.preventDefault();
     this.press.emit()
   }
 
