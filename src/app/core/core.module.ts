@@ -18,6 +18,7 @@ import { ContactsComponent } from './pages/contacts/contacts.component';
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { TransactionComponent } from './pages/transactions/transaction/transaction.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { TransactionComponent } from './pages/transactions/transaction/transacti
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,
+        MatIconModule,
     ]
 })
 
