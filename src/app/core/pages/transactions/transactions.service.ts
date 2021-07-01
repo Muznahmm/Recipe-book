@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ContactTransactionResponse } from 'src/app/helpers/types';
+import { TransactionResponse } from 'src/app/helpers/types';
 import * as API from '../../../helpers/apis';
 
 @Injectable({
@@ -15,6 +15,10 @@ export class TransactionsService {
 
     fetchTransactionsOfContact(id: number) {
         return this.http
-      .get<ContactTransactionResponse>(`${API.GET_CONT_TRANSACTIONS}/${id}`);
+      .get<TransactionResponse>(`${API.GET_CONT_TRANSACTIONS}/${id}`);
+    }
+
+    fetchTransactionsOfAccount() {
+        return this.http.get<TransactionResponse>(API.GET_ACCOUNT_TRANSACTIONS);
     }
 }

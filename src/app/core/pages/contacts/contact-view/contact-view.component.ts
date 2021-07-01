@@ -12,6 +12,7 @@ import { ContactsService } from '../contacts.service';
 export class ContactViewComponent implements OnInit {
   contact!: ContactData;
   transactions: TransactionData[] = [];
+  
   private contactId!: number;
 
   constructor(

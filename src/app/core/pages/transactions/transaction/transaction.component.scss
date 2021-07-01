@@ -1,3 +1,5 @@
+@import '../../../../../color';
+
 .container {
     display: flex;
     padding: 10px 0;
@@ -11,7 +13,7 @@
             font-weight: 500;
         }
         .transaction-type {
-            font-size: 12px;
+            font-size: 16px;
             color: gray;
         }
     }
@@ -48,6 +50,21 @@
         text-align: right;
         font-weight: 500;
         color: #3f51b5;
+    }
+
+    &.is-owed {
+        .transaction-amount {
+            color: $pink;
+        }
+    }
+
+    &.hide-name {
+        .contact-info {
+            width: 10%;
+        }
+        .transaction-details {
+            width: 55%;
+        }
     }
 
 }

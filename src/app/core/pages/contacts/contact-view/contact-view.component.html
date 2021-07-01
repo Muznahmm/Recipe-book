@@ -31,6 +31,12 @@
         </div>
     </div>
     <div class="transactions">
-        <app-transaction *ngFor="let transaction of transactions; last as isLastIteration" [transaction]="transaction" [isLast]="isLastIteration"></app-transaction>
+        <!-- Hide contact name using property [hideContactName] = true -->
+        <mm-transaction 
+            *ngFor="let transaction of transactions; last as isLastIteration"
+            [transaction]="transaction" 
+            [isLast]="isLastIteration"
+            [hideContactName]= "true"
+        ></mm-transaction>
     </div>
 </div>

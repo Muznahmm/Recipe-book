@@ -1,1 +1,41 @@
-<p>transactions works!</p>
+<div class="container">
+    <div class="user-data">
+        <div class="general-info">
+            <div class="image">
+                <img src="assets/images/contact.png">
+            </div>
+            <div class="general-inner-container">
+                <div class="fullname">USER NAME</div>
+                <div class="email">teat@email.com</div>
+            </div>
+        </div>
+        
+        
+        <div class="transaction-info">
+            <div class="youOwe">
+                <span class="text">
+                    You Owes: <span class="amount">{{ 1000 | currency:'INR' }}</span>
+                </span>
+            </div>
+            <div class="oweYou">
+                <span class="text">
+                    Owes You: <span class="amount">{{ 2000 | currency:'INR' }}</span>
+                </span>
+            </div>
+        </div>
+        <div class="buttons">
+            <button mat-fab style="background-color: #d87093;">
+              <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="transactions">
+        <!-- Hide contact name using property [hideContactName] = true -->
+        <mm-transaction
+        *ngFor="let transaction of transactions; last as isLastIteration"
+        [transaction]="transaction" [isLast]="isLastIteration"
+        >
+        </mm-transaction>   
+    </div>
+</div>

@@ -16,6 +16,6 @@ export interface TransactionData {
     updatedAt: number;
 }
 
-export interface ContactTransactionResponse {
+export interface TransactionResponse {
     transactions: TransactionData[];
 }
