@@ -16,13 +16,24 @@
             .link{
                 margin-right: 16px;
                 font-weight: 500;
-                font-size: 18px;
+                font-size: 16px;
                 text-decoration: none;
                 color:white;
             }
             .active {
                 color: #d87093;
+                padding-bottom: 17px;
                 border-bottom: 4px solid #d87093;
+            }
+        }
+        .user-details {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: auto;
+            font-weight: 500;
+            .username {
+                font-size: 16px;
             }
         }
 

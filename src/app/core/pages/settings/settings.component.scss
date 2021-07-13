@@ -1,0 +1,21 @@
+@import '../../../../color';
+
+.container {
+    padding-top: 20px;
+
+    .header {
+        margin: 0;
+        color: $primary-color;
+    }
+    .update-field {
+        .fullWidth {
+            width: 100%;
+        }
+
+        button{
+            background-color: $pink;
+            color: white;
+            float: right;
+        }
+    }
+}

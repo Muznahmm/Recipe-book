@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 
 interface NavLink {
   name: string;
@@ -12,7 +13,9 @@ interface NavLink {
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -27,5 +30,9 @@ export class NavbarComponent implements OnInit {
       path: '/transactions',
     }
   ];
+
+  get userName() {
+    return this.authService.getUser()?.username;
+  }
 
 }
