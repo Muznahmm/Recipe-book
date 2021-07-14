@@ -13,7 +13,10 @@ import { ContactsData, ContactData } from '../../../helpers/types/contacts.types
 
 export class ContactsService {
     contacts: ContactData[] = [];
-    contactIdsBeingFetched: number[] = []
+    /**
+     * It will add all induvidually fetched ids
+     */
+    contactIdsBeingFetched: number[] = [];
 
     constructor(
         private http: HttpClient,

@@ -57,7 +57,7 @@ export class TransactionComponent implements OnInit {
 
     // Using much better method by state transfer
     const contact = this.contactService.getContactById(this.txn.contactId);
-    return contact ? `${contact.firstName} ${contact.lastName}` : 'Loading';
+    return contact ? `${contact.firstName} ${contact.lastName}` : 'Loading...';
   }
 
   get containerStyleClass() {

@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { SharedModule } from '../shared/shared.module';
 import { CoreRoutingModule } from './core.routing.module';
@@ -16,9 +18,10 @@ import { ContactFormComponent } from './pages/contacts/contact-form/contact-form
 import { ContactComponent } from './pages/contacts/contact/contact.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
+
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { TransactionComponent } from './pages/transactions/transaction/transaction.component';
-import { MatIconModule } from '@angular/material/icon';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 
 @NgModule({
@@ -30,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
         ContactViewComponent,
         TransactionsComponent,
         TransactionComponent,
+        SettingsComponent,
     ],
     imports: [
         CoreRoutingModule,
@@ -43,6 +47,7 @@ import { MatIconModule } from '@angular/material/icon';
         MatInputModule,
         MatDialogModule,
         MatIconModule,
+        MatMenuModule,
     ]
 })
 

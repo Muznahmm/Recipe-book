@@ -8,6 +8,7 @@ import { ContactFormComponent } from './pages/contacts/contact-form/contact-form
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
 import { CorePageGuard } from './core-page.guard';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 
 
@@ -41,7 +42,15 @@ const routes: Routes = [
                 path: 'transactions',
                 component: TransactionsComponent,
             },
-            { path: '', redirectTo: 'contacts', pathMatch: 'full' },
+            {
+                path: 'settings',
+                component: SettingsComponent,
+            },
+            { 
+                path: '',
+                redirectTo: 'contacts',
+                pathMatch: 'full'
+            },
         ] 
     },
 ]

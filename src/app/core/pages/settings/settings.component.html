@@ -3,7 +3,7 @@
         <h1>Settings</h1>
     </div>
     <div class="update-field">
-        <form ngForm #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <form ngForm #form="ngForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="fullWidth" appearance="standard">
                 <input matInput ngModel #userName="ngModel" type="text" required name="username" placeholder="Username">
             </mat-form-field>
