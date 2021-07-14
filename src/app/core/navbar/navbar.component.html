@@ -13,7 +13,7 @@
       </div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/settings">Setting</button>
-        <button mat-menu-item>Logout</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </div>
   </mat-toolbar>

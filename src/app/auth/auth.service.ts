@@ -97,4 +97,8 @@ export class AuthService {
     //     return this.user;
     // }
 
+    logout() {
+        return this.cookieService.delete(AUTH_KEY);
+    }
+
 }
