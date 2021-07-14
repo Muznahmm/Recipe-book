@@ -1,3 +1,5 @@
+@import '../../../color';
+
 .container {
     height: 100%;
     display: flex;
@@ -32,6 +34,17 @@
             cursor: pointer;
             margin-left: auto;
             font-weight: 500;
+            .user-badge {
+                background-color: $pink;
+                color: white;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                margin-right: 5px;
+            }
             .username {
                 font-size: 16px;
             }

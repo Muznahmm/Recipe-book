@@ -43,6 +43,13 @@ export class SettingsComponent implements AfterViewInit, OnDestroy{
   //   }
   // }
   onSubmit() {
+    /**
+     * Check the for is valid
+     */
+    if (!this.form.valid) {
+      return;
+    }
+    
     this.authService.updateUsername(this.form.value)
     .subscribe()
   }
