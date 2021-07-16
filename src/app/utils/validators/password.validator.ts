@@ -15,7 +15,7 @@ export interface strongPasswordErrors {
 export class PasswordValidators {
     static shouldBeStrong(minLength: number, maxLength?: number): ValidatorFn {
         //validator fn is a signature of return function here
-        return (control: AbstractControl): ValidationErrors | null => {
+        return (control: AbstractControl): strongPasswordErrors | null => {
             const value = control.value as string;
             if(!value) {
                 return null;
@@ -56,7 +56,7 @@ export class PasswordValidators {
                 };
             }
 
-            const UPPERCASE_REGEXP = /[^A-Z]/g;
+            const UPPERCASE_REGEXP = /[A-Z]/g;
             if (!UPPERCASE_REGEXP.test(value)) {
                 return {
                     shouldBeStrong: {
@@ -65,7 +65,7 @@ export class PasswordValidators {
                 }
             }
 
-            const LOWERCASE_REGEXP = /[^a-z]/g;
+            const LOWERCASE_REGEXP = /[a-z]/g;
             if (!LOWERCASE_REGEXP.test(value)) {
                 return {
                     shouldBeStrong: {
@@ -74,11 +74,11 @@ export class PasswordValidators {
                 }
             }
 
-            const NUMBER_REGEXP = /[^A_Z]/g;
+            const NUMBER_REGEXP = /[0-9]/g;
             if (!NUMBER_REGEXP.test(value)) {
                 return {
                     shouldBeStrong: {
-                        requiredNumricalCharacter: true,
+                        requiredNumericalCharacter: true,
                     }
                 }
             }
