@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/Operators';
 
 import { AuthService } from '../../../auth/auth.service';
@@ -13,6 +13,12 @@ import { ContactsData, ContactData } from '../../../helpers/types/contacts.types
 
 export class ContactsService {
     contacts: ContactData[] = [];
+
+    private subject = new BehaviorSubject<ContactData[]>([]);
+
+    // Make a subject to Observable
+    contact$ = this.subject.asObservable();
+
     /**
      * It will add all induvidually fetched ids
      */
@@ -48,7 +54,10 @@ export class ContactsService {
     }
 
     getContactById(id: number): ContactData | undefined {
-        const contact = this.contacts.find(c => c.id === id);
+        // const contact = this.contacts.find(c => c.id === id);
+
+        const contact = this.subject.getValue().find(c => c.id === id);
+
 
         if(!contact) {
             /** 
@@ -66,13 +75,20 @@ export class ContactsService {
 
     private updateContactList(contact: ContactData) {
         // It will give new contact that stored in backend.
-        const indexOfContact = this.contacts.findIndex(c => c.id === contact.id);
+        // const indexOfContact = this.contacts.findIndex(c => c.id === contact.id);
+
+        const contacts = this.subject.getValue();
+
+        const indexOfContact = contacts.findIndex(c => c.id === contact.id);
+            
+        const copyOfContacts = [ ...contacts];
 
         // Update the contact in list
         if(indexOfContact === -1) {
-            this.contacts.push(contact);
+            copyOfContacts.push(contact);
         } else {
-            this.contacts[indexOfContact] = contact; 
+            // It will avoid partial updated details in an updated Object
+            copyOfContacts[indexOfContact] = { ...copyOfContacts[indexOfContact], ...contact}; 
         }
         // it check if there is a contact that is being fetched in contactIdBeingFetched
         const indexOfIdBeingFetched = this.contactIdsBeingFetched.indexOf(contact.id);
@@ -96,10 +112,13 @@ export class ContactsService {
     }
 
     removeContactFromList(id: number) {
-        const index = this.contacts.findIndex(c => c.id === id );
+        const contacts = this.subject.getValue();
+        const index = contacts.findIndex(c => c.id === id );
         // It remove contacts from contacts array
         if(index !== -1) {
-            this.contacts.splice(index, 1);
+            const copyOfContacts = [ ...contacts];
+
+            copyOfContacts.splice(index, 1);
         }
     }
 }
