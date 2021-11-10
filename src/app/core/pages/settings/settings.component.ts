@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
@@ -15,6 +16,7 @@ export class SettingsComponent implements AfterViewInit, OnDestroy{
 
   constructor(
     private authService: AuthService,
+    private router: Router
   ) { }
   /**
    * here onint is loaded after it check constructor
@@ -30,6 +32,7 @@ export class SettingsComponent implements AfterViewInit, OnDestroy{
             username: user.username
           });
         })
+        // this.router.navigateByUrl('/contacts');
       }
     })
   }
