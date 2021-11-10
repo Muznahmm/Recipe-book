@@ -96,6 +96,8 @@ export class ContactsService {
         if(indexOfIdBeingFetched !== -1) {
             this.contactIdsBeingFetched.splice(indexOfIdBeingFetched, 1);
         }
+        // Make sure to call next so that you can get the data
+        this.subject.next(copyOfContacts);
         
     }
 
