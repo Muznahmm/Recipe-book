@@ -26,21 +26,21 @@ export class ContactsService {
 
     constructor(
         private http: HttpClient,
-        private authService: AuthService,
     ) { }
 
     fetchContacts() {
         return this.http.get<ContactsData>(API.GET_CONTACTS)
         .pipe(
             tap(res => {
-                for(const contact of res.contacts) {
+                // for(const contact of res.contacts) {
                     /**
                      * List all contact that are being added 
                      * to the private array of contact
                      */
-                    this.updateContactList(contact);
-                }
-            })
+                //     this.updateContactList(contact);
+                // }
+                this.updateContactsInStore(res.contacts);
+            }),
         );
     }
 
@@ -48,9 +48,9 @@ export class ContactsService {
         return this.http.get<ContactData>(`${API.GET_CONTACT}/${id}`)
         .pipe(
             tap( contact => {
-                this.updateContactList(contact);
-            })
-        )
+                this.updateContactInStore(contact);
+            }),
+        );
     }
 
     getContactById(id: number): ContactData | undefined {
@@ -73,23 +73,18 @@ export class ContactsService {
         return contact;
     }
 
-    private updateContactList(contact: ContactData) {
-        // It will give new contact that stored in backend.
-        // const indexOfContact = this.contacts.findIndex(c => c.id === contact.id);
+    private updateContactInStore(contact: ContactData): void {
+        const copyOfContacts = [...this.subject.getValue()];
 
-        const contacts = this.subject.getValue();
+        const indexOfContact = copyOfContacts.findIndex(c => c.id === contact.id);
 
-        const indexOfContact = contacts.findIndex(c => c.id === contact.id);
-            
-        const copyOfContacts = [ ...contacts];
-
-        // Update the contact in list
-        if(indexOfContact === -1) {
+        // Update contact in the list (instead of having partial obj we gave detailed obj)
+        if (indexOfContact === -1) {
             copyOfContacts.push(contact);
         } else {
-            // It will avoid partial updated details in an updated Object
-            copyOfContacts[indexOfContact] = { ...copyOfContacts[indexOfContact], ...contact}; 
-        }
+            copyOfContacts[indexOfContact] = { ...copyOfContacts[indexOfContact], ...contact }
+        };
+
         // it check if there is a contact that is being fetched in contactIdBeingFetched
         const indexOfIdBeingFetched = this.contactIdsBeingFetched.indexOf(contact.id);
         // If there is  then it removes from contactIdsBeingFetched array
@@ -98,7 +93,26 @@ export class ContactsService {
         }
         // Make sure to call next so that you can get the data
         this.subject.next(copyOfContacts);
+    }
+
+    private updateContactsInStore(contacts: ContactData[]) {
+        // It will give new contact that stored in backend.
+        // const indexOfContact = this.contacts.findIndex(c => c.id === contact.id);
+
+        const copyOfContacts = [ ...this.subject.getValue() ];
+            
+        // Checking is there any contact that match
+        for ( let contact of contacts) {
+            const index = copyOfContacts.findIndex(c => c.id === contact.id);
+
+            if (index === -1) {
+                copyOfContacts.push(contact);
+            } else {
+                copyOfContacts[index] = {...copyOfContacts[index], ...contact};
+            };
+        };
         
+        this.subject.next(copyOfContacts);
     }
 
     deleteContact(id: number) {
