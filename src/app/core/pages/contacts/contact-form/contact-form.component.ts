@@ -1,15 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ContactFormService } from './contact-form.service';
 import { ContactsService } from '../contacts.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TransactionFormComponent } from '../../transactions/transaction-form/transaction-form.component';
+
+interface ModelData {
+  mode: 'create' | 'edit' | 'view';
+}
 
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss']
 })
+
 export class ContactFormComponent implements OnInit {
   @ViewChild('contactFrom') form!: NgForm;
 
@@ -23,6 +30,8 @@ export class ContactFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contactsService: ContactsService,
+    @Inject(MAT_DIALOG_DATA) public data: ModelData,
+    private dialogRef: MatDialogRef<TransactionFormComponent>,
   ) { }
 
   ngOnInit() {
@@ -64,6 +73,10 @@ export class ContactFormComponent implements OnInit {
         this.router.navigateByUrl('/contacts');
       })
     }
+  }
+
+  onClose(): void {
+    this.dialogRef.close();
   }
 
 }
