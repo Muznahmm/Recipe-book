@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ContactData, TransactionData } from 'src/app/helpers/types';
+import { TransactionFormComponent } from '../../transactions/transaction-form/transaction-form.component';
 import { TransactionsService } from '../../transactions/transactions.service';
 import { ContactsService } from '../contacts.service';
 
@@ -18,7 +20,8 @@ export class ContactViewComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private contactsService: ContactsService,
-    private transactionsService: TransactionsService
+    private transactionsService: TransactionsService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,18 @@ export class ContactViewComponent implements OnInit {
     return `${this.contact.firstName + ' ' + this.contact.lastName }`;
   }
 
+  public onAddTransaction(): void {
+    this.dialog.open(TransactionFormComponent, {
+      width: '500px',
+      data: {
+        mode: 'create',
+        afterCreate: () => {
+          this.fetchTransactions();
+        }
+      }
+    })
+  }
+
   private fetchContact() {
     this.contactsService.fetchContactById(this.contactId)
     .subscribe(contact => {
@@ -41,7 +56,7 @@ export class ContactViewComponent implements OnInit {
     })
   }
 
-  fetchTransactions() {
+  private fetchTransactions() {
     this.transactionsService
       .fetchTransactionsOfContact(this.contactId)
       .subscribe(res => {

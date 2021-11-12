@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/Operators';
 import { TransactionFormOption } from 'src/app/helpers/types';
 
-import { AuthService } from '../../../auth/auth.service';
 import * as API from '../../../helpers/apis/contacts';
 import { ContactsData, ContactData } from '../../../helpers/types/contacts.types';
 

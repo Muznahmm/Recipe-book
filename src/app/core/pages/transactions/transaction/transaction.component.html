@@ -2,7 +2,7 @@
 [ngClass]= "{ 'hide_name': hideName }" 
 [ngStyle]= "{ 'border-color': isLast ? 'transparent' : '' }">
     <div class="contact-info">
-        <div class="name" *ngIf="!hideName"> {{ getContactName() }}</div>
+        <a [routerLink] = "['/contact', txn.contactId]" class="name" *ngIf="!hideName"> {{ getContactName() }}</a>
         <div class="transaction-type">{{ transactionType }}</div>
     </div>
     <div class="transaction-details">
