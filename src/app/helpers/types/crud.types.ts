@@ -1,1 +1,1 @@
-export type eventTypes = 'add' | 'visibility'| 'delete'| 'edit';
+export type CrudEventTypes = 'add' | 'visibility'| 'delete'| 'edit';

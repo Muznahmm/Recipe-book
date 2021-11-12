@@ -34,7 +34,7 @@
         <!-- Hide contact name using property [hideContactName] = true -->
         <mm-transaction
         *ngFor="let transaction of transactions; last as isLastIteration"
-        [transaction]="transaction" [isLast]="isLastIteration"
+        [transaction]="transaction" [isLast]="isLastIteration" (refresh)="refreshList()"
         >
         </mm-transaction>   
     </div>

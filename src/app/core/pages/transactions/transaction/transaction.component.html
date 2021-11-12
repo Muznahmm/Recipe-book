@@ -16,5 +16,5 @@
     <div class="transaction-amount">
         <span>{{ txn.amount | currency:'INR' }}</span>
     </div>
-    <crud-buttons [hideAddIcon]="true"></crud-buttons>
+    <crud-buttons [hideAddIcon]="true" (view)="onButtonAction($event)"></crud-buttons>
 </div>

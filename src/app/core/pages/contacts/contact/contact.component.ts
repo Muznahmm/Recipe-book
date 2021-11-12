@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { ContactData, eventTypes } from 'src/app/helpers/types';
+import { ContactData, CrudEventTypes } from 'src/app/helpers/types';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/UI/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ContactsService } from '../contacts.service';
 
@@ -28,7 +28,7 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCaptureEvent(e: eventTypes){
+  onCaptureEvent(e: CrudEventTypes){
     switch(e) {
       case 'add':
         break;

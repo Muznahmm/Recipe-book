@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/Operators';
+import { shareReplay } from 'rxjs/Operators';
 
 
-import { ContactData, TransactionData, TransactionTypeCode } from 'src/app/helpers/types';
+import { ContactData, CrudEventTypes, TransactionData, TransactionTypeCode } from 'src/app/helpers/types';
 import { ContactsService } from '../../contacts/contacts.service';
+import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 
 
 @Component({
@@ -18,10 +20,13 @@ export class TransactionComponent implements OnInit {
   //To hide contact name that already have contact name mentioned above
   @Input('hideContactName') hideName!: boolean; 
 
+  @Output('refresh') refreshList = new EventEmitter();
+
   private fetchContactHttp$!: Observable<ContactData>
   
   constructor(
     private contactService: ContactsService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(){
@@ -80,5 +85,37 @@ export class TransactionComponent implements OnInit {
     return this.txn.description ? this.txn.description : 'No description provided!';
   }
 
+  public onButtonAction(type: CrudEventTypes) {
+    switch(type) {
+      case 'edit': this.onEditTransaction();
+      break;
+
+      case 'visibility': this.onViewTransaction();
+      break;
+
+      case 'delete': this.onDeleteTransaction();
+      break;
+    }
+  }
   
+  public onEditTransaction() {
+    this.dialog.open(TransactionFormComponent, {
+      width: '500px',
+      data: {
+        mode: 'edit',
+        transaction: this.txn,
+        afterCreate: () => {
+         this.refreshList.emit();
+        },
+      },
+    });
+  }
+
+  public onViewTransaction(): void {
+
+  }
+
+  public onDeleteTransaction(): void {
+
+  }
 }

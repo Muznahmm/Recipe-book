@@ -76,18 +76,18 @@ export class TransactionFormComponent implements OnInit {
       contactId,
       type,
       amount,
-      dateTime,
       note,
       description,
+      dateTime,
     } = this.form.value;
 
     const submittedData: CreateOrUpdateTransactionData = {
       contactId,
       type,
       amount: +amount,
-      dateTime: new Date(dateTime).getTime(),
       note,
       description,
+      dateTime: new Date(dateTime).getTime(),
     };
 
     switch(this.data.mode) {
@@ -100,7 +100,8 @@ export class TransactionFormComponent implements OnInit {
       });
       break;
 
-      case 'edit': this.transactionFormService.editTransaction(this.data.transaction!.id, submittedData)
+      case 'edit': this.transactionFormService
+      .editTransaction(this.data.transaction!.id, submittedData)
       .subscribe(_ => {
         if (this.data.afterCreate){
           this.data.afterCreate();
@@ -108,6 +109,8 @@ export class TransactionFormComponent implements OnInit {
         this.dialogRef.close();
       });
       break;
+
+      case 'view': break;
     }
     
     
@@ -122,29 +125,57 @@ export class TransactionFormComponent implements OnInit {
       switch(field.elementType) {
         case 'select': 
         // Because it an optional we need to use conditions
-          if (field.options && (field.options.length > 0)) {
-            // To make first option default choice
-            formControl.push(field.options[0].value);
-          } else {
-            formControl.push('');
-          }
+        if (field.options && (field.options.length > 0)) {
+          // To make first option default choice
+          formControl.push(field.options[0].value);
+        } else {
+          formControl.push(null);
+        }
 
-          if (field.shouldFetchOptions) {
-            if (field.fieldName === 'contactId'){
-              // To show first contact as default choice
-              this.contactsService.fetchContacts().subscribe();
-            }
+        if (field.shouldFetchOptions) {
+          if (field.fieldName === 'contactId'){
+            // To show first contact as default choice
+            this.contactsService.fetchContacts().subscribe();
           }
-          break;
+        }
+        break;
 
         case 'dateTimePicker':
-          const currentDate = new Date().toISOString();
-          formControl.push(currentDate);
-          break;
+        const currentDate = new Date().toISOString();
+        formControl.push(currentDate);
+        break;
           
         default: 
-          formControl.push('');
-          break;
+        formControl.push(null);
+        break;
+      }
+
+      if ((this.data.mode === 'edit') && this.data.transaction) {
+        this.buttonName = 'Update';
+        this.title = 'Edit Transaction';
+
+        const fieldData = this.data.transaction[field.fieldName];
+
+        if (field.elementType === 'dateTimePicker') {
+          formControl[0] = new Date(fieldData).toISOString();
+          console.log(formControl[0]);
+        } else {
+          formControl[0] = fieldData;
+        }
+      }
+
+      if ((this.data.mode === 'view') && this.data.transaction) {
+        this.buttonName = '';
+        this.title = 'Edit Transaction';
+
+        const fieldData = this.data.transaction[field.fieldName];
+
+        if (field.elementType === 'dateTimePicker') {
+          formControl[0] = new Date(fieldData).toISOString();
+          console.log(formControl[0]);
+        } else {
+          formControl[0] = fieldData;
+        }
       }
 
       const synchronusValidator: ValidatorFn[] = [];

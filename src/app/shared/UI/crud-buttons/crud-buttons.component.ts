@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { eventTypes } from 'src/app/helpers/types';
+import { CrudEventTypes } from 'src/app/helpers/types';
 
 @Component({
   selector: 'crud-buttons',
@@ -17,7 +17,7 @@ export class CrudButtonsComponent {
 
 constructor() { }
 
-  onView(eventType: eventTypes) {
+  onView(eventType: CrudEventTypes) {
     this.view.emit(eventType)
   }
 
