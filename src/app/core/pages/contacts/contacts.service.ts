@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/Operators';
+import { map, tap } from 'rxjs/Operators';
+import { TransactionFormOption } from 'src/app/helpers/types';
 
 import { AuthService } from '../../../auth/auth.service';
 import * as API from '../../../helpers/apis/contacts';
@@ -12,7 +13,7 @@ import { ContactsData, ContactData } from '../../../helpers/types/contacts.types
 })
 
 export class ContactsService {
-    contacts: ContactData[] = [];
+    public contacts: ContactData[] = [];
 
     private subject = new BehaviorSubject<ContactData[]>([]);
 
@@ -22,13 +23,13 @@ export class ContactsService {
     /**
      * It will add all induvidually fetched ids
      */
-    contactIdsBeingFetched: number[] = [];
+    public contactIdsBeingFetched: number[] = [];
 
     constructor(
         private http: HttpClient,
     ) { }
 
-    fetchContacts() {
+    public fetchContacts() {
         return this.http.get<ContactsData>(API.GET_CONTACTS)
         .pipe(
             tap(res => {
@@ -44,16 +45,28 @@ export class ContactsService {
         );
     }
 
-    fetchContactById(id: number) {
-        return this.http.get<ContactData>(`${API.GET_CONTACT}/${id}`)
-        .pipe(
-            tap( contact => {
-                this.updateContactInStore(contact);
+    public getContactOption() {
+        return this.contact$.pipe(
+            map(contacts => {
+                const formattedContacts: TransactionFormOption[] = [];
+                
+                for (const contact of contacts) {
+                    
+                    formattedContacts.push ({ 
+                        text: `${ contact.firstName } ${contact.lastName}`,
+                        value: contact.id,
+                    });
+        
+                }
+        
+                return formattedContacts;
             }),
+        
         );
+        
     }
 
-    getContactById(id: number): ContactData | undefined {
+    public getContactById(id: number): ContactData | undefined {
         // const contact = this.contacts.find(c => c.id === id);
 
         const contact = this.subject.getValue().find(c => c.id === id);
@@ -71,6 +84,38 @@ export class ContactsService {
         }
 
         return contact;
+    }
+
+    public fetchContactById(id: number) {
+        return this.http.get<ContactData>(`${API.GET_CONTACT}/${id}`)
+        .pipe(
+            tap( contact => {
+                this.updateContactInStore(contact);
+            }),
+        );
+    }
+
+    public deleteContact(id: number) {
+        return this.http.delete<{success: boolean}>(`${API.DELETE_CONTACT}/${id}`)
+        .pipe(
+            tap(res => {
+                if(res.success){
+                    // Remove Contacts from service list
+                    this.removeContactFromList(id)
+                }
+            })
+        );
+    }
+
+    public removeContactFromList(id: number) {
+        const contacts = this.subject.getValue();
+        const index = contacts.findIndex(c => c.id === id );
+        // It remove contacts from contacts array
+        if(index !== -1) {
+            const copyOfContacts = [ ...contacts];
+
+            copyOfContacts.splice(index, 1);
+        }
     }
 
     private updateContactInStore(contact: ContactData): void {
@@ -115,26 +160,4 @@ export class ContactsService {
         this.subject.next(copyOfContacts);
     }
 
-    deleteContact(id: number) {
-        return this.http.delete<{success: boolean}>(`${API.DELETE_CONTACT}/${id}`)
-        .pipe(
-            tap(res => {
-                if(res.success){
-                    // Remove Contacts from service list
-                    this.removeContactFromList(id)
-                }
-            })
-        );
-    }
-
-    removeContactFromList(id: number) {
-        const contacts = this.subject.getValue();
-        const index = contacts.findIndex(c => c.id === id );
-        // It remove contacts from contacts array
-        if(index !== -1) {
-            const copyOfContacts = [ ...contacts];
-
-            copyOfContacts.splice(index, 1);
-        }
-    }
 }

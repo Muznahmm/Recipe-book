@@ -5,8 +5,8 @@
                 <img src="assets/images/contact.png">
             </div>
             <div class="general-inner-container">
-                <div class="fullname">USER NAME</div>
-                <div class="email">teat@email.com</div>
+                <div class="fullname">{{ username }}</div>
+                <div class="email">{{ email }}</div>
             </div>
         </div>
         
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="buttons">
-            <button mat-fab style="background-color: #d87093;">
+            <button mat-fab style="background-color: #d87093;" (click)="addNewTransaction()">
               <mat-icon>add</mat-icon>
             </button>
         </div>

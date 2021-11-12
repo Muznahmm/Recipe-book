@@ -8,6 +8,7 @@ import { ContactFormComponent } from './pages/contacts/contact-form/contact-form
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
 import { CorePageGuard } from './core-page.guard';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { TransactionFormComponent } from './pages/transactions/transaction-form/transaction-form.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 
 
