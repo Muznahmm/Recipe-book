@@ -67,5 +67,6 @@ export class ContactViewComponent implements OnInit {
 
   public refreshList = () => {
     this.fetchContact();
+    this.fetchTransactions();
   }
 }

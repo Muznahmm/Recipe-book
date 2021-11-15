@@ -23,8 +23,8 @@ export class TransactionsService {
         return this.http.get<TransactionResponse>(API.GET_ACCOUNT_TRANSACTIONS);
     }
 
-    public deleteTransacton(txnId: number) {
-        return this.http.get<{success: boolean}>(`${DELETE_TRANSACTION}/${txnId}`)
+    public deleteTransacton(id: number) {
+        return this.http.delete<{success: boolean}>(`${DELETE_TRANSACTION}/${id}`)
     }
 
     public fetchAccountSummary() {

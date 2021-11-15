@@ -62,10 +62,6 @@ export class ContactComponent implements OnInit {
         deleteFunc: this.deleteContact,
       }
     })
-
-    // deleteModel.afterClosed().subscribe(result => {
-    //   console.log(result)
-    // })
   }
 
   private deleteContact = () => {
