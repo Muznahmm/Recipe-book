@@ -74,19 +74,14 @@ export class TransactionFormComponent implements OnInit {
     return this.form.controls[controlName];
   }
 
-  public hasError(controlName: string) {
+  public hasError(controlName: string): boolean {
     const control = this.getControl(controlName);
     return control.invalid && control.touched;
   }
 
-  public getFieldError(controlName: string) {
+  public getFieldError(controlName: string): string {
     const control = this.getControl(controlName);
-
-    if (control.hasError('required')) {
-      return 'This field is required'
-    }
-    
-    return null;
+    return 'This field is required!';
   }
 
   public onClose(): void {
@@ -153,27 +148,27 @@ export class TransactionFormComponent implements OnInit {
       let initialValue: any = '';
 
       switch(field.elementType) {
-        case 'select': 
-        initialValue = null;
+        case 'select':
+          initialValue = null;
 
-        // Because it an optional we need to use conditions
-        if (field.options && (field.options.length > 0)) {
-          // To make first option default choice
-          initialValue = field.options[0].value;
-        } 
-        
-
-        if ((field.fieldName === 'contactId') && this.data.contactId) {
-          initialValue = this.data.contactId;
-        }
-
-        if (field.shouldFetchOptions) {
-          if (field.fieldName === 'contactId'){
-            // To show first contact as default choice
-            this.contactsService.fetchContacts().subscribe();
+          if (field.options && (field.options.length > 0)) {
+            // Make the first option the default choice.
+            initialValue = field.options[0].value;
           }
-        }
-        break;
+
+          if ((field.fieldName === 'contactId') && this.data.contactId) {
+            initialValue = this.data.contactId;
+          }
+
+          // formControl.push(initialValue);
+
+          if (field.shouldFetchOptions) {
+            if (field.fieldName === 'contactId') {
+              // Trigger fetching of contacts list.
+              this.contactsService.fetchContacts().subscribe();
+            }
+          }
+          break;
 
         case 'dateTimePicker':
         // const currentDate = new Date().toISOString();
@@ -211,22 +206,24 @@ export class TransactionFormComponent implements OnInit {
         }
       }
 
+
+      const synchronusValidator: ValidatorFn[] = [];
+      
+      if (field.isRequired) {
+        synchronusValidator.push(Validators.required);
+      }
+
       let isDisable = false;
 
       if (this.data.mode === 'view') {
         isDisable = true;
       }
 
-      if ((field.fieldName === 'contactId') && this.data.contactId) {
+      if ((field.fieldName === 'contactId')) {
         isDisable = true;
       }
 
-      const synchronusValidator: ValidatorFn[] = [];
-      if (field.isRequired) {
-        synchronusValidator.push(Validators.required);
-      }
-
-      formControl.push(synchronusValidator);
+      // formControl.push(synchronusValidator);
       formControls[field.fieldName] = [
         {
           value: initialValue,
