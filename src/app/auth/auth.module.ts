@@ -8,26 +8,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import { LayoutComponent } from './layout/layout.component';
+import { SignupModule } from './signup/signup.module';
+import { LoginModule } from './login/login.module';
 
 
 @NgModule({
    declarations: [
-    LoginComponent,
-    SignupComponent,
     LayoutComponent,
    ],
    imports: [
       RouterModule,
       MatCardModule,
-      MatInputModule,
-      MatButtonModule,
-      MatIconModule,
       FormsModule,
       CommonModule,
       ReactiveFormsModule,
+   ],
+   exports: [
+      LayoutComponent,
    ]
 })
 
