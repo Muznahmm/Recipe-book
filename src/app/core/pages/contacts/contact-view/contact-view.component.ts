@@ -61,7 +61,11 @@ export class ContactViewComponent implements OnInit {
       .fetchTransactionsOfContact(this.contactId)
       .subscribe(res => {
         this.transactions = res.transactions;
-        console.log(res)
+        this.refreshList;
       });
+  }
+
+  public refreshList = () => {
+    this.fetchContact();
   }
 }

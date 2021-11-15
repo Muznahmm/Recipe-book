@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { TransactionResponse } from 'src/app/helpers/types';
+import { TransactionResponse, TransactionSummary } from 'src/app/helpers/types';
 import * as API from '../../../helpers/apis';
+import { DELETE_TRANSACTION } from '../../../helpers/apis';
 
 @Injectable({
     providedIn: 'root',
@@ -20,5 +21,13 @@ export class TransactionsService {
 
     fetchTransactionsOfAccount() {
         return this.http.get<TransactionResponse>(API.GET_ACCOUNT_TRANSACTIONS);
+    }
+
+    public deleteTransacton(txnId: number) {
+        return this.http.get<{success: boolean}>(`${DELETE_TRANSACTION}/${txnId}`)
+    }
+
+    public fetchAccountSummary() {
+        return this.http.get<TransactionSummary>(API.GET_ACCOUNT_TXN_SUMMARY);
     }
 }

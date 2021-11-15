@@ -19,11 +19,7 @@ export class TransactionFromService {
     public editTransaction(txnId: number, data: CreateOrUpdateTransactionData) {
         return this.http.patch<TransactionData>(`${UPDATE_TRANSACTION}/${txnId}`, data)
     }
-
-    // public viewTransacton(txnId: number) {
-    //     return this.http.get(`${VIEW}/${txnId}`)
-    // }
-    
+   
     getTransactionFormModel(): TransactionFromField[] {
         return [
             {

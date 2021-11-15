@@ -110,7 +110,10 @@ export class TransactionFormComponent implements OnInit {
       });
       break;
 
-      case 'view': break;
+      case 'view': 
+      break;
+
+      // case : break;
     }
     
     
@@ -165,9 +168,7 @@ export class TransactionFormComponent implements OnInit {
       }
 
       if ((this.data.mode === 'view') && this.data.transaction) {
-        this.buttonName = '';
-        this.title = 'Edit Transaction';
-
+        this.title = 'View Transaction';
         const fieldData = this.data.transaction[field.fieldName];
 
         if (field.elementType === 'dateTimePicker') {

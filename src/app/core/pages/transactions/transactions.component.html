@@ -14,12 +14,12 @@
         <div class="transaction-info">
             <div class="youOwe">
                 <span class="text">
-                    You Owes: <span class="amount">{{ 1000 | currency:'INR' }}</span>
+                    You Owes: <span class="amount">{{ owesYou | currency:'INR' }}</span>
                 </span>
             </div>
             <div class="oweYou">
                 <span class="text">
-                    Owes You: <span class="amount">{{ 2000 | currency:'INR' }}</span>
+                    Owes You: <span class="amount">{{ youOwe | currency:'INR' }}</span>
                 </span>
             </div>
         </div>

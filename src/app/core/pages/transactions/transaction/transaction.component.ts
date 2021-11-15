@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/Operators';
 
 
 import { ContactData, CrudEventTypes, TransactionData, TransactionTypeCode } from 'src/app/helpers/types';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/UI/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ContactsService } from '../../contacts/contacts.service';
 import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
+import { TransactionsService } from '../transactions.service';
 
 
 @Component({
@@ -22,11 +24,13 @@ export class TransactionComponent implements OnInit {
 
   @Output('refresh') refreshList = new EventEmitter();
 
-  private fetchContactHttp$!: Observable<ContactData>
-  
+  public fetchContactHttp$!: Observable<ContactData>
+  private deleteModalRef!: MatDialogRef<DeleteConfirmationDialogComponent>;
+
   constructor(
     private contactService: ContactsService,
     private dialog: MatDialog,
+    private transactionService: TransactionsService,
   ) { }
 
   ngOnInit(){
@@ -112,10 +116,36 @@ export class TransactionComponent implements OnInit {
   }
 
   public onViewTransaction(): void {
-
+    this.dialog.open(TransactionFormComponent, {
+      width: '500px',
+      data: {
+        mode: 'view',
+        transaction: this.txn,
+        afterCreate: () => {
+          this.refreshList.emit();
+        },
+      }
+    })
   }
 
   public onDeleteTransaction(): void {
+    this.deleteModalRef = this.dialog
+    .open(DeleteConfirmationDialogComponent, {
+      data: { 
+        title: "Are you sure you want to delete this transaction ?",
+        description: "Deleting this transaction will permanently remove it.",
+        deleteFunc: this.deleteTransaction,
+      }
+    }) 
+  }
 
+  private deleteTransaction = () => {
+    this.transactionService.deleteTransacton(this.txn.id)
+    .subscribe(res => {
+      if (res.success) {
+        this.deleteModalRef.close();
+        this.refreshList.emit();
+      }
+    })
   }
 }

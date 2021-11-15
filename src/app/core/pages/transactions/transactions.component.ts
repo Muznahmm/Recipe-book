@@ -13,9 +13,13 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
-  transactions: TransactionData [] = [];
-  username = '';
-  email = ''
+  public transactions: TransactionData [] = [];
+  public username = '';
+  public email = ''
+
+
+  public owesYou = 0;
+  public youOwe = 0;
 
   private subscription!: Subscription;
 
@@ -26,6 +30,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.fetchAccountTransactionSummary();
+
     this.subscription = this.authService.user$
     .subscribe(user => {
       if (user) {
@@ -49,7 +55,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
       .fetchTransactionsOfAccount()
       .subscribe(res => {
         this.transactions = res.transactions;
-        console.log(res)
       });
   }
 
@@ -65,9 +70,18 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   public refreshList = () => {
     this.fetchTransaction();
+    this.fetchAccountTransactionSummary();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  private fetchAccountTransactionSummary(): void {
+    this.transactionsService.fetchAccountSummary()
+    .subscribe(res => {
+      this.owesYou = res.owesYou;
+      this.youOwe = res.youOwe;
+    })
   }
 }

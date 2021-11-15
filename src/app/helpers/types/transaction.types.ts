@@ -45,3 +45,8 @@ export interface CreateOrUpdateTransactionData {
     note: string;
     description: string;
 }
+
+export interface TransactionSummary {
+    youOwe: number;
+    owesYou: number;
+}
