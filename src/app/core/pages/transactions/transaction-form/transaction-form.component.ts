@@ -8,7 +8,8 @@ import { TransactionFromService } from './transaction-form.service';
 
 interface ModelData {
   mode: 'create' | 'edit' | 'view';
-  transaction?: TransactionData,
+  transaction?: TransactionData;
+  contactId?: number;
   afterCreate?: () => void;
 }
 
@@ -58,6 +59,16 @@ export class TransactionFormComponent implements OnInit {
     })
 
   }
+
+
+  // Not working why???
+  // public shouldDisableField(controlName: string): boolean {
+  //   if ((controlName === 'contactId') && this.data.contactId) {
+  //     return true;
+  //   }
+
+  //   return false;
+  // }
 
   private getControl(controlName: string): AbstractControl {
     return this.form.controls[controlName];
@@ -124,15 +135,21 @@ export class TransactionFormComponent implements OnInit {
     for (const field of this.formModel) {
       
       const formControl = [];
-      
+      let initialValue: any = '';
+
       switch(field.elementType) {
         case 'select': 
+        initialValue = null;
+
         // Because it an optional we need to use conditions
         if (field.options && (field.options.length > 0)) {
           // To make first option default choice
-          formControl.push(field.options[0].value);
-        } else {
-          formControl.push(null);
+          initialValue = field.options[0].value;
+        } 
+        
+
+        if ((field.fieldName === 'contactId') && this.data.contactId) {
+          initialValue = this.data.contactId;
         }
 
         if (field.shouldFetchOptions) {
@@ -144,39 +161,49 @@ export class TransactionFormComponent implements OnInit {
         break;
 
         case 'dateTimePicker':
-        const currentDate = new Date().toISOString();
-        formControl.push(currentDate);
+        // const currentDate = new Date().toISOString();
+        // formControl.push(currentDate);
+        initialValue = new Date().toISOString();
         break;
           
-        default: 
-        formControl.push(null);
+        default: initialValue = ''
         break;
       }
 
-      if ((this.data.mode === 'edit') && this.data.transaction) {
-        this.buttonName = 'Update';
-        this.title = 'Edit Transaction';
+      if (this.data.transaction) {
+        switch(this.data.mode) {
+          case 'edit': 
+          this.buttonName = 'Update';
+          this.title = 'Edit Transaction';
+          break;
+          case 'view':
+          this.title = 'View Transaction';
+          break;
+        }
 
         const fieldData = this.data.transaction[field.fieldName];
 
         if (field.elementType === 'dateTimePicker') {
-          formControl[0] = new Date(fieldData).toISOString();
-          console.log(formControl[0]);
+          new Date(fieldData).toISOString();
         } else {
-          formControl[0] = fieldData;
+          initialValue = fieldData;
+        }
+
+        if (field.elementType === 'dateTimePicker') {
+          initialValue = new Date(fieldData).toISOString();
+        } else {
+          initialValue = fieldData;
         }
       }
 
-      if ((this.data.mode === 'view') && this.data.transaction) {
-        this.title = 'View Transaction';
-        const fieldData = this.data.transaction[field.fieldName];
+      let isDisable = false;
 
-        if (field.elementType === 'dateTimePicker') {
-          formControl[0] = new Date(fieldData).toISOString();
-          console.log(formControl[0]);
-        } else {
-          formControl[0] = fieldData;
-        }
+      if (this.data.mode === 'view') {
+        isDisable = true;
+      }
+
+      if ((field.fieldName === 'contactId') && this.data.contactId) {
+        isDisable = true;
       }
 
       const synchronusValidator: ValidatorFn[] = [];
@@ -185,7 +212,13 @@ export class TransactionFormComponent implements OnInit {
       }
 
       formControl.push(synchronusValidator);
-      formControls[field.fieldName] = formControl;
+      formControls[field.fieldName] = [
+        {
+          value: initialValue,
+          disabled: isDisable,
+        },
+        synchronusValidator
+      ];
     }
     this.form = this.fb.group(formControls);
   }
