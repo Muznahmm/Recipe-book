@@ -74,6 +74,21 @@ export class TransactionFormComponent implements OnInit {
     return this.form.controls[controlName];
   }
 
+  public hasError(controlName: string) {
+    const control = this.getControl(controlName);
+    return control.invalid && control.touched;
+  }
+
+  public getFieldError(controlName: string) {
+    const control = this.getControl(controlName);
+
+    if (control.hasError('required')) {
+      return 'This field is required'
+    }
+    
+    return null;
+  }
+
   public onClose(): void {
     this.dialogRef.close();
   }

@@ -12,9 +12,9 @@
                         {{ option.text }}
                     </mat-option>
                 </mat-select>
-                <!-- <mat-error *ngIf="form.controls[field.fieldName].touched && form.controls[field.fieldName].invalid">
-                    <span></span>
-                </mat-error> -->
+                <mat-error *ngIf="hasError(field.fieldName)">
+                    <span>{{ getFieldError(field.fieldName) }}</span>
+                </mat-error>
             </mat-form-field>
 
             <!-- Input fields -->
@@ -23,9 +23,9 @@
                 <mat-label>{{ field.displayName }}</mat-label>
                 <!-- If condition to get specified input fields -->
                 <input matInput [formControlName]="field.fieldName" [type]="field.inputType || 'text'">
-                <!-- <mat-error *ngIf="form.controls[field.fieldName].touched && form.controls[field.fieldName].invalid">
-                    <span></span>
-                </mat-error> -->
+                <mat-error *ngIf="hasError(field.fieldName)">
+                    <span>{{ getFieldError(field.fieldName) }}</span>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width"  *ngIf="field.elementType === 'dateTimePicker'">
@@ -36,15 +36,15 @@
                  -->
                 <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
                 <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+                <mat-error *ngIf="hasError(field.fieldName)">
+                    <span>{{ getFieldError(field.fieldName) }}</span>
+                </mat-error>
             </mat-form-field>
 
             <!-- Textarea fields -->
             <mat-form-field class="full-width" *ngIf="field.elementType === 'textarea'">
                 <mat-label>{{ field.displayName }}</mat-label>
                 <textarea matInput type="text" [formControlName]="field.fieldName"></textarea>
-                <!-- <mat-error *ngIf="form.controls[field.fieldName].touched && form.controls[field.fieldName].invalid">
-                    <span></span>
-                </mat-error> -->
             </mat-form-field>
 
         </div>
