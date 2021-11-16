@@ -1,0 +1,1 @@
+export type CrudEventTypes = 'add' | 'visibility'| 'delete'| 'edit';

@@ -1,0 +1,21 @@
+<a class="contact" [routerLink]="['/contact', contact.id]">
+    <div class="image">
+        <img src="assets/images/contact.png">
+    </div>
+    <div class="info">
+        <div class="name">{{ contact.firstName +' '+ contact.lastName }}</div>
+        <div class="updatedOn">{{ contact.createdAt | date: 'fullDate' }}</div>
+    </div>
+    <div class="email">{{ contact.email }}</div>
+    <div class="summary">
+        <div class="youOwe">
+            You Owes: <span class="amount">{{ contact.youOwe | currency:'INR' }}</span>
+        </div>
+        <div class="oweYou">
+            Owes You: <span class="amount">{{ contact.owesYou | currency:'INR' }}</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <crud-buttons [hideAddIcon]="true" (view)="onCaptureEvent($event)"></crud-buttons>
+    </div>
+</a>

@@ -1,0 +1,6 @@
+<div class="button">
+    <crud-button iconName="add" (press)="onView('add')" *ngIf="!hideAdd"></crud-button>
+    <crud-button iconName="visibility" (press)="onView('visibility')" *ngIf="!hideView"></crud-button>
+    <crud-button iconName="edit" (press)="onView('edit')" *ngIf="!hideEdit"></crud-button>
+    <crud-button iconName="delete" (press)="onView('delete')" *ngIf="!hideDelete"></crud-button>
+</div>

@@ -1,0 +1,20 @@
+<div class="container" 
+[ngClass]= "{ 'hide_name': hideName }" 
+[ngStyle]= "{ 'border-color': isLast ? 'transparent' : '' }">
+    <div class="contact-info">
+        <a [routerLink] = "['/contact', txn.contactId]" class="name" *ngIf="!hideName"> {{ getContactName() }}</a>
+        <div class="transaction-type">{{ transactionType }}</div>
+    </div>
+    <div class="transaction-details">
+        <div class="notes">{{ transactionNote }}</div>
+        <div class="inner-desc">
+            <span class="dateAndTime">{{ txn.dateTime | date: 'MMMM d, y, h:mm a'
+            }}</span>
+            <span class="desc">{{ description }}</span>
+        </div>
+    </div>
+    <div class="transaction-amount">
+        <span>{{ txn.amount | currency:'INR' }}</span>
+    </div>
+    <crud-buttons [hideAddIcon]="true" (view)="onButtonAction($event)"></crud-buttons>
+</div>

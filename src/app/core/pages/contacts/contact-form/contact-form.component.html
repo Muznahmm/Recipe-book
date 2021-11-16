@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>{{ title }}</h1>
+    <form ngForm #contactFrom="ngForm" autocomplete="off" (ngSubmit)="onContactForm()">
+        
+        <mat-form-field class="full-width">
+            <input matInput ngModel #firstName="ngModel" type="text" required name="firstName" placeholder="First Name">
+        </mat-form-field> 
+        <div *ngIf="firstName.touched">
+            <mat-error *ngIf="firstName.hasError('required')">
+                First name is required.
+            </mat-error>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput ngModel #lastName="ngModel" type="text" required name="lastName" placeholder="Last Name">
+        </mat-form-field> 
+        <div *ngIf="lastName.touched">
+            <mat-error *ngIf="lastName.hasError('required')">
+                Last name is required.
+            </mat-error>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput ngModel #email="ngModel" type="text" required name="email" placeholder="Email">
+        </mat-form-field> 
+        <div *ngIf="email.touched">
+            <mat-error *ngIf="email.hasError('required')">
+                Email is required.
+            </mat-error>
+        </div>
+        <div class="buttons">
+            <button mat-raised-button class="create" type="submit" color="primary">{{ buttonName }}</button>
+        </div>
+    </form>
+
+</div>

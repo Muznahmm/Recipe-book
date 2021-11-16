@@ -1,0 +1,27 @@
+<div class="container">
+  <mat-toolbar color="primary">
+    <div class="toolbar-container">
+      <a class="badge" routerLink="/">Money Manager</a>
+  
+      <div class="links">
+        <a class="link" *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active">{{ link.name }}</a>
+      </div>
+      
+      <div class="user-details" [matMenuTriggerFor]="menu">
+        <div class="user-badge">{{ username | charprofile}}</div>
+        <div class="username">{{ username }}</div>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+      
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/settings">Setting</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <div class="contents">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

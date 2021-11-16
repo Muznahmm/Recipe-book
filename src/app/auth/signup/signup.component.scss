@@ -1,0 +1,22 @@
+form {
+    display: flex;
+    flex-direction: column;
+
+    p.sign-up{
+        text-align: center;
+        a.link {
+            font-weight: 500;
+            color: #3f51b5;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+    button {
+        width: 250px;
+        margin: 0 auto;
+    }
+}
+
+.fullWidth{
+    width: 100%;
+}

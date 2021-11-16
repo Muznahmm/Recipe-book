@@ -1,0 +1,61 @@
+@import '../../../color';
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .toolbar-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .badge{
+            text-decoration: none;
+            color: white;
+            font-size: 22px;
+        }
+        .links {
+            margin-left: 16px;
+            .link{
+                margin-right: 16px;
+                font-weight: 500;
+                font-size: 16px;
+                text-decoration: none;
+                color:white;
+            }
+            .active {
+                color: #d87093;
+                padding-bottom: 17px;
+                border-bottom: 4px solid #d87093;
+            }
+        }
+        .user-details {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: auto;
+            font-weight: 500;
+            .user-badge {
+                background-color: $pink;
+                color: white;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                margin-right: 5px;
+            }
+            .username {
+                font-size: 16px;
+            }
+        }
+
+    }
+    .contents {
+        flex-grow: 1;
+        overflow-y: auto;
+        width: 65%;
+        max-width: 1200px;
+        margin: auto;
+    }
+}
