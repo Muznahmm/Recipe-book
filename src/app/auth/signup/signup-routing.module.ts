@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import { SignupComponent } from './signup.component';
 
 const routes: Route[] = [
     {
         path: '',
-        loadChildren: () => import('./signup.module').then(m => m.SignupModule),
+        component: SignupComponent,
     },
 ];
 

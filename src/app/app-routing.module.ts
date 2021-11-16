@@ -2,19 +2,15 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { AuthPageGuard } from './auth/auth-page.guard';
 
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
-
-
 const routes: Route[] = [
     { 
         path: 'login', 
-        component: LoginComponent,
+        loadChildren: () => import('./auth/login/login.module').then(m => m.LoginModule),
         canActivate: [AuthPageGuard], 
     },
     { 
         path: 'signup', 
-        component: SignupComponent,
+        loadChildren: () => import('./auth/signup/signup.module').then(m => m.SignupModule),
         canActivate: [AuthPageGuard], 
     },
     // { path: '', redirectTo: 'login', pathMatch: 'full'},
