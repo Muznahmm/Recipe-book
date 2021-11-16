@@ -108,6 +108,7 @@ export class TransactionComponent implements OnInit {
       data: {
         mode: 'edit',
         transaction: this.txn,
+        contactId: this.hideName ? this.txn.contactId : null,
         afterCreate: () => {
          this.refreshList.emit();
         },
@@ -139,7 +140,7 @@ export class TransactionComponent implements OnInit {
     }) 
   }
 
-  private deleteTransaction = () => {
+  private deleteTransaction = (): void => {
     this.transactionService.deleteTransacton(this.txn.id)
     .subscribe(res => {
       if (res.success) {
