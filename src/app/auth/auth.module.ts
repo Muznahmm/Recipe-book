@@ -6,10 +6,6 @@ import { MatCardModule } from '@angular/material/card';
 
 import { LayoutComponent } from './layout/layout.component';
 
-
-
-
-
 @NgModule({
    declarations: [
     LayoutComponent,
