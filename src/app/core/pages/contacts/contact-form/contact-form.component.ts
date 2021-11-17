@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ContactFormService } from './contact-form.service';
 import { ContactsService } from '../contacts.service';
+import { FormCanDeactivate } from 'src/app/utils/guards/form-can-deactivate';
 
 @Component({
   selector: 'app-contact-form',
@@ -11,7 +12,7 @@ import { ContactsService } from '../contacts.service';
   styleUrls: ['./contact-form.component.scss']
 })
 
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent extends FormCanDeactivate implements OnInit {
   @ViewChild('contactFrom') form!: NgForm;
 
   private contactId?: number;
@@ -24,7 +25,13 @@ export class ContactFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contactsService: ContactsService,
-  ) { }
+  ) {
+    super();
+  }
+
+  get formRef() {
+    return this.form;
+  }
 
   ngOnInit() {
     this.activatedRoute.params
@@ -47,7 +54,7 @@ export class ContactFormComponent implements OnInit {
       });
   }
 
-  onContactForm() {
+  public onContactForm(): void {
     if(!this.contactId){
       this.contactFormService
           .createContact(this.form.value)

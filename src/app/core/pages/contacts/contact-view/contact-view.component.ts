@@ -39,6 +39,7 @@ export class ContactViewComponent implements OnInit {
 
   public onAddTransaction(): void {
     this.dialog.open(TransactionFormComponent, {
+      disableClose: true,
       width: '500px',
       data: {
         mode: 'create',

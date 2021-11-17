@@ -33,7 +33,7 @@ const routes: Route[] = [
     imports: [
         RouterModule.forRoot(routes, {
             // Added to load one page to avoid lazy loading disadvantage
-            preloadingStrategy: PreloadAllModules
+            // preloadingStrategy: PreloadAllModules
         }),
     ],
     exports: [
