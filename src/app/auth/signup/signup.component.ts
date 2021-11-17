@@ -5,13 +5,14 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { UsernameValidators,PasswordValidators, strongPasswordErrors  } from '../../utils/validators';
+import { FormCanDeactivate } from 'src/app/utils/guards/form-can-deactivate';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent extends FormCanDeactivate implements OnInit, OnDestroy {
   hidePassword = true;
   hideConfirmPassword= true;
   signUpInProgress = false;
@@ -28,7 +29,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) { }
+  ) {
+    super();
+  }
 
   private passwordSubs!: Subscription;
 
@@ -70,6 +73,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     for (let control in this.signupForm.controls) {
       this.signupForm.controls[control].setErrors(null);
     }
+  }
+
+  get formRef() {
+    return this.signupForm;
   }
 
   get userName() {

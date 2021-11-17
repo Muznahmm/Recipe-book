@@ -6,6 +6,7 @@ const routes: Route[] = [
     {
         path: '',
         component: SignupComponent,
+        // canDeactivate: [CanDeactivateForm]
     },
 ];
 
