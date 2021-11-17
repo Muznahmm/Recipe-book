@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { CreateOrUpdateTransactionData, TransactionData, TransactionFormOption, TransactionFromField } from 'src/app/helpers/types';
+import { FormCanDeactivate } from 'src/app/utils/guards/form-can-deactivate';
 import { ContactsService } from '../../contacts/contacts.service';
 import { TransactionFromService } from './transaction-form.service';
 
@@ -18,13 +19,15 @@ interface ModelData {
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss']
 })
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent extends FormCanDeactivate implements OnInit {
   public buttonName = "Add";
   public title = "New Transaction";
 
   public formModel: TransactionFromField[] = [];
   public contactOptions: TransactionFormOption[] = [];
   public form!: FormGroup;
+
+  public disableButton = false;
 
   
   constructor(
@@ -33,9 +36,16 @@ export class TransactionFormComponent implements OnInit {
     private contactsService: ContactsService,
     private dialogRef: MatDialogRef<TransactionFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ModelData,
-  ) { }
+  ) {
+    super();
+  }
+
+  get formRef() {
+    return this.form;
+  }
 
   ngOnInit(): void {
+    this.dialogRef.disableClose = true;
     this.formModel = this.transactionFormService.getTransactionFormModel();
     this.createForm();
 
@@ -85,7 +95,16 @@ export class TransactionFormComponent implements OnInit {
   }
 
   public onClose(): void {
-    this.dialogRef.close();
+    // If the form is submitting
+    if ( this.canDeactivate() ) {
+      this.dialogRef.close();
+      return;
+    }
+
+    // form is dirty and want to close
+    if (confirm('You have unsaved changes. Are you sure you want to leave the page ?')) {
+      this.dialogRef.close();
+    }
   }
 
   public onSubmit(): void {
@@ -112,7 +131,10 @@ export class TransactionFormComponent implements OnInit {
     };
 
     switch(this.data.mode) {
-      case 'create': this.transactionFormService.createTransaction(submittedData)
+      case 'create':
+      this.disableButton = true;
+      
+      this.transactionFormService.createTransaction(submittedData)
       .subscribe(_ => {
         if (this.data.afterCreate){
           this.data.afterCreate();
@@ -121,7 +143,9 @@ export class TransactionFormComponent implements OnInit {
       });
       break;
 
-      case 'edit': this.transactionFormService
+      case 'edit':
+        this.disableButton = true;
+      this.transactionFormService
       .editTransaction(this.data.transaction!.id, submittedData)
       .subscribe(_ => {
         if (this.data.afterCreate){
@@ -130,11 +154,6 @@ export class TransactionFormComponent implements OnInit {
         this.dialogRef.close();
       });
       break;
-
-      case 'view': 
-      break;
-
-      // case : break;
     }
     
     
