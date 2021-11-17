@@ -6,6 +6,7 @@ import { ContactModule } from './contact/contact.module';
 import { MatButtonModule } from '@angular/material/button';
 import { ContactsRoutingModule } from './contacts.routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NavbarModule } from '../../navbar/navbar.module';
 
 
 
@@ -17,8 +18,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     ContactModule,
     ContactsRoutingModule,
+    NavbarModule,
     SharedModule,
     MatButtonModule,
-  ]
+  ],
 })
 export class ContactsModule { }

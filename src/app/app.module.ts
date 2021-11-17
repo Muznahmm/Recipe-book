@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthHeaderInterceptor } from './utils/interceptors/auth-header.interceptor';
+import { NavbarModule } from './core/navbar/navbar.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AuthHeaderInterceptor } from './utils/interceptors/auth-header.intercep
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
+    NavbarModule,
     CommonModule,
   ],
   providers: [ 
