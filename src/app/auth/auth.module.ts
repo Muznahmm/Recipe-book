@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 
 import { LayoutComponent } from './layout/layout.component';
+import { NavbarModule } from '../core/navbar/navbar.module';
 
 @NgModule({
    declarations: [

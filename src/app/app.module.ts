@@ -22,8 +22,6 @@ import { NavbarModule } from './core/navbar/navbar.module';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    AuthModule,
-    NavbarModule,
     CommonModule,
   ],
   providers: [ 

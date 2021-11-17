@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { TransactionComponent } from './transaction.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TransactionFormModule } from '../transaction-form/transaction-form.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     SharedModule,
     RouterModule,
+    TransactionFormModule,
   ],
   exports: [
     TransactionComponent,
