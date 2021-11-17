@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
-import { TransactionsComponent } from './transactions.component';
+
+import { TransactionFormComponent } from './transaction-form.component';
+
 
 const routes: Route[] = [
     {
         path: '',
-        component: TransactionsComponent,
+        component: TransactionFormComponent,
     },
 ];
 
@@ -14,4 +16,4 @@ const routes: Route[] = [
     exports: [ RouterModule ],
 })
 
-export class TransactionsRoutingModule { }
+export class TransactionFormRoutingMmodule { }

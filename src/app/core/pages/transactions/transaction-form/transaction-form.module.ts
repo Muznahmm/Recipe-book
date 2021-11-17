@@ -12,8 +12,8 @@ import {
 } from '@angular-material-components/datetime-picker';
 
 import { TransactionFormComponent } from './transaction-form.component';
-import { TransactionModule } from '../transaction/transaction.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -24,13 +24,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule,
     MatDatepickerModule,
+    MatButtonModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
+  ],
+  exports: [
+    TransactionFormComponent,
   ]
 })
 export class TransactionFormModule { }
