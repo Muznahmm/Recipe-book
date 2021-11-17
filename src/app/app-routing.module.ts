@@ -20,6 +20,9 @@ const routes: Route[] = [
             const m = await import('./core/navbar/navbar.module');
             return m.NavbarModule;
         },
+        // another example with same result
+        // loadChildren: () => import('./core/navbar/navbar.module')
+        // .then(m => m.NavbarModule),
         canActivate: [CorePageGuard],
     },
     { 

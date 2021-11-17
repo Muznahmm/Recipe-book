@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { NavbarModule } from 'src/app/core/navbar/navbar.module';
 
 
 
