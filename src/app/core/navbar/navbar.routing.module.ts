@@ -28,7 +28,12 @@ const routes: Route[] = [
                     return m.SettingsModule;
                 },
             },
-        ]
+            { 
+                path: '',
+                redirectTo: 'contacts',
+                pathMatch: 'full'
+            },
+        ],
     }
 ];
 
