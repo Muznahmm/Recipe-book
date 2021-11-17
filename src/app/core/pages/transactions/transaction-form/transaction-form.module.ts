@@ -32,9 +32,6 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
-  ],
-  exports: [
-    TransactionFormComponent,
   ]
 })
 export class TransactionFormModule { }
