@@ -59,6 +59,10 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
       this.contactFormService
           .createContact(this.form.value)
           .subscribe( _ => {
+            /*While submitting the form it also thinks it dirty 
+             *and shows alert msg to make form pure we use reset fuction
+             */
+            this.form.reset();
             this.router.navigateByUrl('/contacts');
       });
     } else {
@@ -69,6 +73,7 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
       this.contactFormService
       .updateContact(updateContact)
       .subscribe( _ => {
+        this.form.reset();
         this.router.navigateByUrl('/contacts');
       })
     }

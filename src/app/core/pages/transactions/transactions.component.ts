@@ -60,7 +60,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   public addNewTransaction(): void {
     const dialogRef = this.dialog.open(TransactionFormComponent,{
-      disableClose: true,
       width: '500px',
       data: {
         mode: 'create',

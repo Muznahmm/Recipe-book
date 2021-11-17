@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { CreateOrUpdateTransactionData, TransactionData, TransactionFormOption, TransactionFromField } from 'src/app/helpers/types';
+import { FormCanDeactivate } from 'src/app/utils/guards/form-can-deactivate';
 import { ContactsService } from '../../contacts/contacts.service';
 import { TransactionFromService } from './transaction-form.service';
 
@@ -18,7 +19,7 @@ interface ModelData {
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss']
 })
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent extends FormCanDeactivate implements OnInit {
   public buttonName = "Add";
   public title = "New Transaction";
 
@@ -26,7 +27,7 @@ export class TransactionFormComponent implements OnInit {
   public contactOptions: TransactionFormOption[] = [];
   public form!: FormGroup;
 
-  private disableButton = false;
+  public disableButton = false;
 
   
   constructor(
@@ -35,9 +36,16 @@ export class TransactionFormComponent implements OnInit {
     private contactsService: ContactsService,
     private dialogRef: MatDialogRef<TransactionFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ModelData,
-  ) { }
+  ) {
+    super();
+  }
+
+  get formRef() {
+    return this.form;
+  }
 
   ngOnInit(): void {
+    this.dialogRef.disableClose = true;
     this.formModel = this.transactionFormService.getTransactionFormModel();
     this.createForm();
 
@@ -87,7 +95,16 @@ export class TransactionFormComponent implements OnInit {
   }
 
   public onClose(): void {
-    this.dialogRef.close();
+    // If the form is submitting
+    if ( this.canDeactivate() ) {
+      this.dialogRef.close();
+      return;
+    }
+
+    // form is dirty and want to close
+    if (confirm('You have unsaved changes. Are you sure you want to leave the page ?')) {
+      this.dialogRef.close();
+    }
   }
 
   public onSubmit(): void {
@@ -216,7 +233,6 @@ export class TransactionFormComponent implements OnInit {
       }
 
       let isDisable = false;
-      let showButton = true;
 
       if (this.data.mode === 'view') {
         isDisable = true;
