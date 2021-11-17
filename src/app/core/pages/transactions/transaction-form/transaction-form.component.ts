@@ -26,6 +26,8 @@ export class TransactionFormComponent implements OnInit {
   public contactOptions: TransactionFormOption[] = [];
   public form!: FormGroup;
 
+  private disableButton = false;
+
   
   constructor(
     private transactionFormService: TransactionFromService,
@@ -112,7 +114,10 @@ export class TransactionFormComponent implements OnInit {
     };
 
     switch(this.data.mode) {
-      case 'create': this.transactionFormService.createTransaction(submittedData)
+      case 'create':
+      this.disableButton = true;
+      
+      this.transactionFormService.createTransaction(submittedData)
       .subscribe(_ => {
         if (this.data.afterCreate){
           this.data.afterCreate();
@@ -121,7 +126,9 @@ export class TransactionFormComponent implements OnInit {
       });
       break;
 
-      case 'edit': this.transactionFormService
+      case 'edit':
+        this.disableButton = true;
+      this.transactionFormService
       .editTransaction(this.data.transaction!.id, submittedData)
       .subscribe(_ => {
         if (this.data.afterCreate){
@@ -130,11 +137,6 @@ export class TransactionFormComponent implements OnInit {
         this.dialogRef.close();
       });
       break;
-
-      case 'view': 
-      break;
-
-      // case : break;
     }
     
     
@@ -214,6 +216,7 @@ export class TransactionFormComponent implements OnInit {
       }
 
       let isDisable = false;
+      let showButton = true;
 
       if (this.data.mode === 'view') {
         isDisable = true;
