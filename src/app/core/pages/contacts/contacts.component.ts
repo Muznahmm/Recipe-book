@@ -23,7 +23,6 @@ export class ContactsComponent implements OnInit {
     this.contactsService
     .fetchContacts()
     .subscribe(res => {
-      console.log(res.contacts)
       this.contacts = res.contacts;
     });
   }
