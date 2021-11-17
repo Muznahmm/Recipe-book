@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import { PreloadAllModules, Route, RouterModule } from '@angular/router';
 import { AuthPageGuard } from './auth/auth-page.guard';
 import { CorePageGuard } from './core/core-page.guard';
 
@@ -31,7 +31,9 @@ const routes: Route[] = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes, {
+            preloadingStrategy: PreloadAllModules
+        }),
     ],
     exports: [
         RouterModule,
