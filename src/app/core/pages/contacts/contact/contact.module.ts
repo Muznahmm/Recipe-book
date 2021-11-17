@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ContactComponent } from './contact.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NavbarModule } from 'src/app/core/navbar/navbar.module';
 
 
 
@@ -14,7 +17,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     SharedModule,
     // Need Router module to route to a contact
-    RouterModule
+    RouterModule,
   ],
   exports: [
     ContactComponent,

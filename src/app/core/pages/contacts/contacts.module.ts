@@ -10,14 +10,15 @@ import { NavbarModule } from '../../navbar/navbar.module';
 
 
 
+
 @NgModule({
   declarations: [
     ContactsComponent,
   ],
   imports: [
     CommonModule,
-    ContactModule,
     ContactsRoutingModule,
+    ContactModule,
     NavbarModule,
     SharedModule,
     MatButtonModule,

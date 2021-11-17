@@ -7,19 +7,6 @@ const routes: Route[] = [
     {
         path: '',
         component: ContactsComponent,
-        children: [
-            {
-                path: 'contact/:id',
-                loadChildren: () => import('./contact-view/contact-view.module')
-                .then(m => m.ContactViewModule),
-        
-            },
-        ]
-    },
-    { 
-        path: 'new-contact', 
-        loadChildren: () => import('./contact-form/contact-form.module')
-        .then(m => m.ContactFormModule),
     },
 ]
 
