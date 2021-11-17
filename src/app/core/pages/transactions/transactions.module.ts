@@ -16,8 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   imports: [
     CommonModule,
-    TransactionModule,
     TransactionsRoutingModule,
+    TransactionModule,
     TransactionFormModule,
     MatButtonModule,
     MatIconModule,
