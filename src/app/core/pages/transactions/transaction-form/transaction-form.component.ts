@@ -219,7 +219,7 @@ export class TransactionFormComponent implements OnInit {
         isDisable = true;
       }
 
-      if ((field.fieldName === 'contactId')) {
+      if ((field.fieldName === 'contactId') && this.data.contactId) {
         isDisable = true;
       }
 

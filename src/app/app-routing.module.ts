@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { AuthPageGuard } from './auth/auth-page.guard';
+import { CorePageGuard } from './core/core-page.guard';
 
 const routes: Route[] = [
     { 
@@ -13,7 +14,14 @@ const routes: Route[] = [
         loadChildren: () => import('./auth/signup/signup.module').then(m => m.SignupModule),
         canActivate: [AuthPageGuard], 
     },
-    // { path: '', redirectTo: 'login', pathMatch: 'full'},
+    { 
+        path: '', 
+        loadChildren: async() => {
+            const m = await import('./core/navbar/navbar.module');
+            return m.NavbarModule;
+        },
+        canActivate: [CorePageGuard],
+    },
     { 
         path: '**', 
         redirectTo: 'login', 

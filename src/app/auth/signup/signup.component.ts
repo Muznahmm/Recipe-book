@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.signUpInProgress = true;
 
       this.authService.signup(this.signupForm.value)
-      .subscribe( _ => {
+      .subscribe(_ => {
         this.signUpInProgress = false;
         this.resetSignupForm();
         this.router.navigateByUrl('/login');

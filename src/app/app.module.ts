@@ -8,9 +8,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 
 import { AuthModule } from './auth/auth.module';
-import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthHeaderInterceptor } from './utils/interceptors/auth-header.interceptor';
+import { NavbarModule } from './core/navbar/navbar.module';
+
 
 @NgModule({
   declarations: [
@@ -20,9 +21,9 @@ import { AuthHeaderInterceptor } from './utils/interceptors/auth-header.intercep
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CoreModule,
     AppRoutingModule,
     AuthModule,
+    NavbarModule,
     CommonModule,
   ],
   providers: [ 

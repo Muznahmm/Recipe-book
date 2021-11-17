@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
 
-import { ContactsComponent } from './pages/contacts/contacts.component';
-import { ContactComponent } from './pages/contacts/contact/contact.component';
+import { CorePageGuard } from './core-page.guard';
+import { NavbarComponent } from './navbar/navbar.component';
 import { ContactFormComponent } from './pages/contacts/contact-form/contact-form.component';
 import { ContactViewComponent } from './pages/contacts/contact-view/contact-view.component';
-import { CorePageGuard } from './core-page.guard';
-import { TransactionsComponent } from './pages/transactions/transactions.component';
-import { TransactionFormComponent } from './pages/transactions/transaction-form/transaction-form.component';
+import { ContactComponent } from './pages/contacts/contact/contact.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-
-
+import { TransactionsComponent } from './pages/transactions/transactions.component';
 
 const routes: Routes = [
     { 
@@ -49,7 +46,6 @@ const routes: Routes = [
             },
             { 
                 path: '',
-                redirectTo: 'contacts',
                 pathMatch: 'full'
             },
         ] 
