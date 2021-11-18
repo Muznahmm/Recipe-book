@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { NotifierModule } from 'angular-notifier';
 
 import { AppComponent } from './app.component';
 
-import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthHeaderInterceptor } from './utils/interceptors/auth-header.interceptor';
-import { NavbarModule } from './core/navbar/navbar.module';
+import { HttpDelayInterceptor } from './utils/interceptors/delay.interceptor';
 
 
 @NgModule({
@@ -18,11 +18,12 @@ import { NavbarModule } from './core/navbar/navbar.module';
     AppComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NotifierModule,
     AppRoutingModule,
-    CommonModule,
   ],
   providers: [ 
     CookieService,
@@ -30,8 +31,13 @@ import { NavbarModule } from './core/navbar/navbar.module';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHeaderInterceptor,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpDelayInterceptor,
+      multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
