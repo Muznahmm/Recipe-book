@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -22,6 +22,7 @@ interface ModelData {
 export class TransactionFormComponent extends FormCanDeactivate implements OnInit {
   public buttonName = "Add";
   public title = "New Transaction";
+  public hideButton!: boolean;
 
   public formModel: TransactionFromField[] = [];
   public contactOptions: TransactionFormOption[] = [];
@@ -132,7 +133,6 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
 
     switch(this.data.mode) {
       case 'create':
-      this.disableButton = true;
       
       this.transactionFormService.createTransaction(submittedData)
       .subscribe(_ => {
@@ -144,7 +144,6 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
       break;
 
       case 'edit':
-        this.disableButton = true;
       this.transactionFormService
       .editTransaction(this.data.transaction!.id, submittedData)
       .subscribe(_ => {
