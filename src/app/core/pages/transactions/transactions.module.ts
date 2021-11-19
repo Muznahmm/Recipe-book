@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TransactionsRoutingModule } from './transactions.routing.module';
 import { TransactionFormModule } from './transaction-form/transaction-form.module';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -19,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
     TransactionsRoutingModule,
     TransactionModule,
     TransactionFormModule,
+    SharedModule,
     MatButtonModule,
     MatIconModule,
   ]

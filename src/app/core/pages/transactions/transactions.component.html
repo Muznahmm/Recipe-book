@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="transactions">
+    <div class="transactions" *ngIf="!isLoading">
         <!-- Hide contact name using property [hideContactName] = true -->
         <mm-transaction
         *ngFor="let transaction of transactions; last as isLastIteration"
@@ -38,4 +38,6 @@
         >
         </mm-transaction>   
     </div>
+
+    <mm-spinner *ngIf="isLoading"></mm-spinner>
 </div>

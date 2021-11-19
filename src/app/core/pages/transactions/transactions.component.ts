@@ -15,7 +15,8 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
 export class TransactionsComponent implements OnInit, OnDestroy {
   public transactions: TransactionData [] = [];
   public username = '';
-  public email = ''
+  public email = '';
+  public isLoading = false;
 
 
   public owesYou = 0;
@@ -43,9 +44,12 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   }
 
   fetchTransaction() {
+    this.isLoading = true;
+
     this.transactionsService
     .fetchTransactionsOfAccount()
     .subscribe( res => {
+      this.isLoading = false;
       this.transactions = res.transactions;
     })
   }
