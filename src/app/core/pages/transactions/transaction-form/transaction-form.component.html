@@ -50,7 +50,13 @@
         
         <div class="buttons">
             <button mat-raised-button (click)="onClose()">Close</button>
-            <button mat-raised-button class="create" type="submit" color="primary" *ngIf=" this.data.mode === 'view' ? hideButton : !hideButton">{{ buttonName }}</button>
+            <button
+            mat-raised-button class="create" type="submit"
+            color="primary" *ngIf="this.data.mode !== 'view'"
+            [disabled]="disableButton"
+            >
+                {{ buttonName }}
+            </button>
         </div>
 
         <!-- {{form.value | json}} -->

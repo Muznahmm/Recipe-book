@@ -23,7 +23,6 @@ interface ModelData {
 export class TransactionFormComponent extends FormCanDeactivate implements OnInit {
   public buttonName = "Add";
   public title = "New Transaction";
-  public hideButton!: boolean;
 
   public formModel: TransactionFromField[] = [];
   public contactOptions: TransactionFormOption[] = [];
@@ -125,7 +124,7 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
     } = this.form.value;
 
     const submittedData: CreateOrUpdateTransactionData = {
-      contactId,
+      contactId: contactId ? contactId : this.data.contactId,
       type,
       amount: +amount,
       note,
@@ -135,9 +134,12 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
 
     switch(this.data.mode) {
       case 'create':
-      
+      this.disableButton = false;
+
       this.transactionFormService.createTransaction(submittedData)
       .subscribe(_ => {
+        this.disableButton = false;
+
         this.notifierService
         .notify('success', 'Transaction Created Successfully!');
         if (this.data.afterCreate){
@@ -148,9 +150,12 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
       break;
 
       case 'edit':
+      this.disableButton = true;
+      
       this.transactionFormService
       .editTransaction(this.data.transaction!.id, submittedData)
       .subscribe(_ => {
+        this.disableButton = false;
 
         this.notifierService
         .notify('success', 'Transaction Updated Successfully!');

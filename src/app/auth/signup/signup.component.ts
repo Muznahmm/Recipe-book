@@ -13,9 +13,10 @@ import { FormCanDeactivate } from 'src/app/utils/guards/form-alert/form-can-deac
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent extends FormCanDeactivate implements OnInit, OnDestroy {
-  hidePassword = true;
-  hideConfirmPassword= true;
-  signUpInProgress = false;
+  public hidePassword = true;
+  public hideConfirmPassword= true;
+  public signUpInProgress = false;
+  public disableButton = false;
 
   // valueFromService = this.authService.getValue();
   
@@ -54,14 +55,16 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
   onSubmit() {
     if (this.signupForm.valid) {
       this.signUpInProgress = true;
-
+      this.disableButton = true;
       this.authService.signup(this.signupForm.value)
       .subscribe(_ => {
         this.signUpInProgress = false;
+        this.disableButton = false;
         this.resetSignupForm();
         this.router.navigateByUrl('/login');
       },
       err => {
+        this.disableButton = false;
         console.log('Error:',err)
       });
     }

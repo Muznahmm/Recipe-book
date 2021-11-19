@@ -47,7 +47,7 @@
             Already have an account? <a class="link" routerLink="/login">Login</a>
         </p>
 
-        <button mat-raised-button color="primary">Sign Up</button>
+        <button mat-raised-button color="primary" disabled="signupForm.invalid || disableButton">Sign Up</button>
     </form>
     <!-- {{ 'Value: ' + valueFromService }}
         <button mat-raised-button color="primary" (click)="setValue()">Set Value</button>

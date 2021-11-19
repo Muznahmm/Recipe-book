@@ -17,6 +17,7 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
   @ViewChild('contactFrom') form!: NgForm;
 
   private contactId?: number;
+  public disableButton = false;
 
   title = 'New Contact';
   buttonName = 'Create';
@@ -58,9 +59,12 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
 
   public onContactForm(): void {
     if(!this.contactId){
+      this.disableButton = false;
+      
       this.contactFormService
           .createContact(this.form.value)
           .subscribe( _ => {
+            this.disableButton = true;
             /*While submitting the form it also thinks it dirty 
              *and shows alert msg to make form pure we use reset fuction
              */
@@ -71,14 +75,20 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
             this.router.navigateByUrl('/contacts');
       });
     } else {
+
       const updateContact = {
         ...this.form.value,
         id: this.contactId
       }
+
+      this.disableButton = false;
+
       this.contactFormService
       .updateContact(updateContact)
       .subscribe( _ => {
-        
+
+        this.disableButton = true;
+
         this.notifierService
         .notify('success', 'Contact Updated Successfully');
 

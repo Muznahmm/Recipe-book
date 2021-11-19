@@ -28,7 +28,13 @@
         </div>
         <div class="buttons">
             <button mat-raised-button routerLink="/"> Cancel </button>
-            <button mat-raised-button class="create" type="submit" color="primary">{{ buttonName }}</button>
+            <button
+            mat-raised-button class="create"
+            type="submit" color="primary"
+            [disabled]="disableButton"
+            >
+                {{ buttonName }}
+            </button>
         </div>
     </form>
 
