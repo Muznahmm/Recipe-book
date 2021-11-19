@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 
 import { ContactFormService } from './contact-form.service';
 import { ContactsService } from '../contacts.service';
@@ -25,6 +26,7 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contactsService: ContactsService,
+    private notifierService: NotifierService
   ) {
     super();
   }
@@ -62,6 +64,9 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
             /*While submitting the form it also thinks it dirty 
              *and shows alert msg to make form pure we use reset fuction
              */
+            this.notifierService
+            .notify('sucess', 'Contact Created Successfully');
+            
             this.form.reset();
             this.router.navigateByUrl('/contacts');
       });
@@ -73,6 +78,10 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
       this.contactFormService
       .updateContact(updateContact)
       .subscribe( _ => {
+        
+        this.notifierService
+        .notify('sucess', 'Contact Updated Successfully');
+
         this.form.reset();
         this.router.navigateByUrl('/contacts');
       })

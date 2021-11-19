@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/Operators';
+import { NotifierService } from 'angular-notifier';
 
 
 import { ContactData, CrudEventTypes, TransactionData, TransactionTypeCode } from 'src/app/helpers/types';
@@ -31,6 +32,7 @@ export class TransactionComponent implements OnInit {
     private contactService: ContactsService,
     private dialog: MatDialog,
     private transactionService: TransactionsService,
+    private notifierService: NotifierService
   ) { }
 
   ngOnInit(){
@@ -143,6 +145,8 @@ export class TransactionComponent implements OnInit {
   private deleteTransaction = (): void => {
     this.transactionService.deleteTransacton(this.txn.id)
     .subscribe(res => {
+      this.notifierService
+      .notify('success', 'Transaction Deleted Successfully!');
       if (res.success) {
         this.deleteModalRef.close();
         this.refreshList.emit();

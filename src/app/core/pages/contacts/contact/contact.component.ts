@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
+
 
 import { ContactData, CrudEventTypes } from 'src/app/helpers/types';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/UI/delete-confirmation-dialog/delete-confirmation-dialog.component';
@@ -23,6 +25,7 @@ export class ContactComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private contactsService: ContactsService,
+    private notifierService: NotifierService,
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +71,10 @@ export class ContactComponent implements OnInit {
     this.contactsService
     .deleteContact(this.contact.id)
     .subscribe(res => {
+      
+      this.notifierService
+      .notify('success', 'Contact Deleted Successfully!');
+
       if(res.success) {
         this.deleteModalRef.close();
         this.refresh.emit();

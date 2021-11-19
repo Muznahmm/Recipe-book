@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NotifierService } from 'angular-notifier';
 
 import { CreateOrUpdateTransactionData, TransactionData, TransactionFormOption, TransactionFromField } from 'src/app/helpers/types';
 import { FormCanDeactivate } from 'src/app/utils/guards/form-can-deactivate';
@@ -37,6 +38,7 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
     private contactsService: ContactsService,
     private dialogRef: MatDialogRef<TransactionFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ModelData,
+    private notifierService: NotifierService,
   ) {
     super();
   }
@@ -136,6 +138,8 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
       
       this.transactionFormService.createTransaction(submittedData)
       .subscribe(_ => {
+        this.notifierService
+        .notify('success', 'Transaction Created Successfully!');
         if (this.data.afterCreate){
           this.data.afterCreate();
         }
@@ -147,6 +151,10 @@ export class TransactionFormComponent extends FormCanDeactivate implements OnIni
       this.transactionFormService
       .editTransaction(this.data.transaction!.id, submittedData)
       .subscribe(_ => {
+
+        this.notifierService
+        .notify('success', 'Transaction Updated Successfully!');
+
         if (this.data.afterCreate){
           this.data.afterCreate();
         }
