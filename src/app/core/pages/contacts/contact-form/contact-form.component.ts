@@ -65,7 +65,7 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
              *and shows alert msg to make form pure we use reset fuction
              */
             this.notifierService
-            .notify('sucess', 'Contact Created Successfully');
+            .notify('success', 'Contact Created Successfully');
             
             this.form.reset();
             this.router.navigateByUrl('/contacts');
@@ -80,7 +80,7 @@ export class ContactFormComponent extends FormCanDeactivate implements OnInit {
       .subscribe( _ => {
         
         this.notifierService
-        .notify('sucess', 'Contact Updated Successfully');
+        .notify('success', 'Contact Updated Successfully');
 
         this.form.reset();
         this.router.navigateByUrl('/contacts');
