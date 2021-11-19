@@ -45,6 +45,7 @@ export class ContactViewComponent implements OnInit {
       width: '500px',
       data: {
         mode: 'create',
+        contactId: this.contactId,
         afterCreate: () => {
           this.fetchTransactions();
         }
