@@ -3,8 +3,10 @@
         <h1>Contacts</h1>
         <button mat-raised-button routerLink="/new-contact">Create Contacts</button>
     </div>
-    <div class="contacts">
+    <div class="contacts" *ngIf="!isLoading">
         <app-contact (refresh)="fetchContacts()" [contactToDisplay]="contact" *ngFor="let contact of contacts"></app-contact>
     </div>
+
+    <mm-spinner *ngIf="isLoading"></mm-spinner>
 
 </div>

@@ -9,8 +9,9 @@ import { ContactData } from '../../../helpers/types/contacts.types';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
-  contacts: ContactData[] = [];
-  
+  public contacts: ContactData[] = [];
+  public isLoading = false;
+
   constructor(
     private contactsService: ContactsService,
   ) { }
@@ -20,9 +21,11 @@ export class ContactsComponent implements OnInit {
   }
 
   fetchContacts() {
+    this.isLoading = true;
     this.contactsService
     .fetchContacts()
     .subscribe(res => {
+      this.isLoading = false;
       this.contacts = res.contacts;
     });
   }
