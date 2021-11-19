@@ -22,7 +22,17 @@ import { HttpDelayInterceptor } from './utils/interceptors/delay.interceptor';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NotifierModule,
+    NotifierModule.withConfig({
+      position: {
+        vertical: {
+          position: 'top',
+          distance: 75,
+        },
+        horizontal: {
+          position: 'right'
+        }
+      }
+    }),
     AppRoutingModule,
   ],
   providers: [ 
