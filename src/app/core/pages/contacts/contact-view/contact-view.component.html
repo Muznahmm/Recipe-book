@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="contact-data"  *ngIf="contact">
+    <div class="contact-data"  *ngIf="contact && !isLoadingContact">
         <div class="general-info">
             <div class="image">
                 <img src="assets/images/contact.png">
@@ -30,7 +30,7 @@
             </button>
         </div>
     </div>
-    <div class="transactions">
+    <div class="transactions" *ngIf="!isLoadingTxn">
         <!-- Hide contact name using property [hideContactName] = true -->
         <mm-transaction 
             *ngFor="let transaction of transactions; last as isLastIteration"
@@ -40,4 +40,5 @@
             (refresh)="refreshList()"
         ></mm-transaction>
     </div>
+    <mm-spinner *ngIf="isLoadingTxn || isLoadingContact"></mm-spinner>
 </div>

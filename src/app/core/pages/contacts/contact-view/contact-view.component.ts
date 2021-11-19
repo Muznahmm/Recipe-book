@@ -12,8 +12,10 @@ import { ContactsService } from '../contacts.service';
   styleUrls: ['./contact-view.component.scss']
 })
 export class ContactViewComponent implements OnInit {
-  contact!: ContactData;
-  transactions: TransactionData[] = [];
+  public contact!: ContactData;
+  public transactions: TransactionData[] = [];
+  public isLoadingContact = false;
+  public isLoadingTxn = false;
   
   private contactId!: number;
 
@@ -51,16 +53,23 @@ export class ContactViewComponent implements OnInit {
   }
 
   private fetchContact() {
+    this.isLoadingContact = true;
+
     this.contactsService.fetchContactById(this.contactId)
     .subscribe(contact => {
+      this.isLoadingContact = false;
+
       this.contact = contact;
     })
   }
 
   private fetchTransactions() {
+    this.isLoadingTxn = true;
+
     this.transactionsService
       .fetchTransactionsOfContact(this.contactId)
       .subscribe(res => {
+        this.isLoadingTxn = false;
         this.transactions = res.transactions;
         this.refreshList;
       });
