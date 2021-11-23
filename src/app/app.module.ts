@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthHeaderInterceptor } from './utils/interceptors/auth-header.interceptor';
 import { HttpDelayInterceptor } from './utils/interceptors/delay.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { HttpDelayInterceptor } from './utils/interceptors/delay.interceptor';
         }
       }
     }),
+    MatDialogModule,
     AppRoutingModule,
   ],
   providers: [ 

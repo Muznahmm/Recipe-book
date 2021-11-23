@@ -16,7 +16,10 @@ interface NavLink {
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   // username = this.authService.getUser()?.username;
-  username = '';
+  public username = '';
+  public remainingSessionTime = '00:00';
+
+  autoLogoutTimeSubscription!: Subscription;
 
   private subscription!: Subscription;
 
@@ -26,12 +29,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
     this.subscription = this.authService.user$
     .subscribe(user => {
       if (user) {
         this.username = user.username;
       }
     });
+
+    // this.autoLogoutTimeSubscription = this.authService.sessionTime$
+    //   .subscribe(time => {
+    //     this.remainingSessionTime = time;
+    //   });
+
+    // // Check for session time on load.
+    // this.authService.checkForSessionTime();
 
     this.authService.getAccountDetails().subscribe();
   }
