@@ -25,7 +25,6 @@ import { SingupRoutingModule } from './signup-routing.module';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule,
     SingupRoutingModule,
   ],
 })

@@ -4,8 +4,9 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
-import { UsernameValidators,PasswordValidators, strongPasswordErrors  } from '../../utils/validators';
+import { UsernameValidators,PasswordValidators, StrongPasswordErrors  } from '../../utils/validators';
 import { FormCanDeactivate } from 'src/app/utils/guards/form-alert/form-can-deactivate';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-signup',
@@ -16,13 +17,16 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
   public hidePassword = true;
   public hideConfirmPassword= true;
   public signUpInProgress = false;
-  public disableButton = false;
 
   // valueFromService = this.authService.getValue();
   
   signupForm = new FormGroup({
     email: new FormControl('', [ Validators.required, Validators.email ]),
-    userName: new FormControl('', [ Validators.required, UsernameValidators.cannotContainSpace]),
+    username: new FormControl(
+      '',
+      [ Validators.required, UsernameValidators.cannotContainSpace],
+      [ this.usernameValidators.taken ],
+    ),
     password: new FormControl('', [Validators.required, PasswordValidators.shouldBeStrong(6, 10)]),
     confirmPassword: new FormControl('', Validators.required),
   });
@@ -30,6 +34,8 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
   constructor(
     private authService: AuthService,
     private router: Router,
+    private notifierService: NotifierService,
+    private usernameValidators: UsernameValidators,
   ) {
     super();
   }
@@ -52,20 +58,47 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
     this.passwordSubs.unsubscribe();
   }
 
-  onSubmit() {
+  onSignUp() {
     if (this.signupForm.valid) {
       this.signUpInProgress = true;
-      this.disableButton = true;
+
       this.authService.signup(this.signupForm.value)
-      .subscribe(_ => {
+      .subscribe(res => {
+      //   this.notifierService.notify(
+      //     'success',
+      //     'Account Created Successfully'
+      //   );
+      
+      //   this.signUpInProgress = false;
+      //   this.resetSignupForm();
+      //   this.router.navigateByUrl('/login');
+      // },
+      // err => {
+      //   this.signUpInProgress = false;
+        //   if (err.error.errors.email) {
+          //     this.email.setErrors({taken: true})
+          //   }
+      // });
+
         this.signUpInProgress = false;
-        this.disableButton = false;
-        this.resetSignupForm();
-        this.router.navigateByUrl('/login');
-      },
-      err => {
-        this.disableButton = false;
-        console.log('Error:',err)
+        if (res.success) {
+
+          this.notifierService.notify(
+            'success',
+            'Account Created Successfully',
+          );
+    
+          this.resetSignupForm();
+          this.router.navigateByUrl('/login');
+
+          } else {
+            if (res.error) {
+              if (res.error.email) {
+                this.email.setErrors({ taken: true })
+              }
+            }
+          }
+        
       });
     }
   }
@@ -82,8 +115,8 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
     return this.signupForm;
   }
 
-  get userName() {
-    return this.signupForm.get('userName') as FormControl;
+  get username() {
+    return this.signupForm.get('username') as FormControl;
   }
 
   get email() {
@@ -99,22 +132,32 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
   }
 
   getEmailError(){
-    if(this.email.hasError('required')){
+    if (this.email.hasError('required')) {
       return 'This field is required!';
     }
-    if(this.email.hasError('email')){
+
+    if (this.email.hasError('email')) {
       return 'Invalid email!';
+    }
+
+    if (this.email.hasError('taken')) {
+      return 'Email is aleady in use!'
     }
     return null;
   }
 
   getUsernameError(){
-    if(this.userName.hasError('required')){
+    if(this.username.hasError('required')){
       return 'This field is required!';
     }
-    if(this.userName.hasError('cannotContainSpace')){
+    if(this.username.hasError('cannotContainSpace')){
       return 'Should not contain spaces!'
     }
+
+    if(this.username.hasError('taken')){
+      return 'Username is already in use!'
+    }
+
     return null;
   }
 
@@ -124,7 +167,7 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
     }
 
     if (this.password.hasError('shouldBeStrong')) {
-      const errors = (this.password.errors! as strongPasswordErrors).shouldBeStrong;
+      const errors = (this.password.errors! as StrongPasswordErrors).shouldBeStrong;
 
       if ( errors.requiredLength) {
         return `Required minimum ${errors.requiredLength} charecters`;
@@ -166,13 +209,5 @@ export class SignupComponent extends FormCanDeactivate implements OnInit, OnDest
 
     return null;
   }
-
-  // setValue() {
-  //   this.authService.setValue('Sign up');
-  // }
-
-  // getValue() {
-  //   this.valueFromService = this.authService.getValue();
-  // }
 
 }

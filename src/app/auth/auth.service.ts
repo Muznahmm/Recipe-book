@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/Operators'
-import { Observable, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/Operators'
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 import { LoginFormData, SignUpFormData, LoginResponse, AccountDetailsResponse } from '../helpers/types';
 import * as API from '../helpers/apis';
 import { User } from '../helpers/modals';
+import { trimTrailingNulls } from '@angular/compiler/src/render3/view/util';
+
 
 const AUTH_KEY = 'auth';
 
@@ -51,7 +53,23 @@ export class AuthService {
     }
 
     signup(data: SignUpFormData) {
-        return this.http.post(API.SIGNUP, data);
+        return this.http.post(API.SIGNUP, data)
+        .pipe(
+            map(res => {
+                return {
+                    success: true,
+                    // data: res,
+                    error: null,
+                };
+            }),
+            catchError(err => {
+                return of({
+                    success: false,
+                    // data: null,
+                    error: err.error.errors,
+                })
+            })
+        );
     }
 
     getAuthToken() {
@@ -61,6 +79,19 @@ export class AuthService {
     checkAuthValidity() {
         return this.http.get<{ auth: boolean }>(API.AUTH_CHECK);
     }
+
+    /**
+     * Checking the username is used
+     */
+     checkUsernameAvailability(username: string) {
+        const params = new HttpParams().appendAll({
+          username
+        });
+    
+        return this.http
+          .get<{ available: boolean; }>(API.USERNAME_AVAILABLITY, { params });
+    }
+
 
     /**
      * API calls for fetch details of user that log in
