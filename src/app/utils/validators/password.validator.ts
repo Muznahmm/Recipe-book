@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export interface strongPasswordErrors {
+export interface StrongPasswordErrors {
     shouldBeStrong: {
         requiredLength?: number;
         actualLength?: number;
@@ -15,7 +15,7 @@ export interface strongPasswordErrors {
 export class PasswordValidators {
     static shouldBeStrong(minLength: number, maxLength?: number): ValidatorFn {
         //validator fn is a signature of return function here
-        return (control: AbstractControl): strongPasswordErrors | null => {
+        return (control: AbstractControl): StrongPasswordErrors | null => {
             const value = control.value as string;
             if(!value) {
                 return null;
